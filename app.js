@@ -1,0 +1,15 @@
+console.log('Hi')
+console.log('123')
+console.log(true)
+console.log({name: 'Nguyen Anh Tuan', age: 28})
+console.table({name: 'Nguyen Anh Tuan', age: 28})
+console.warn('Warning!!!')
+console.error('Error')
+
+// console.clear()
+
+console.time('Duration Time')
+console.log(123)
+console.log(456)
+console.log(789)
+console.timeEnd('Duration Time')
