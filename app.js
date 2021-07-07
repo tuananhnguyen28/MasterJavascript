@@ -124,3 +124,17 @@ let objectPerson2 = objectPerson1
 objectPerson2.age = 25
 console.log(objectPerson1) // { name: 'Tuan', age: 25 }
 console.log(objectPerson2) // { name: 'Tuan', age: 25 }
+
+// 4. Truthy và Falsy
+
+// Truthy
+let truthyVal
+truthyVal = '1'
+console.log(Boolean(truthyVal))
+// '1' -> true, '0' -> true, '123' -> true, 1 -> true, {} -> true, [] -> true, {name:'Tuan'} -> true
+
+// Falsy
+let falsyVal
+falsyVal = ''
+console.log(Boolean(falsyVal))
+// '' -> false, 0 -> false, null -> false, undefined -> false, NaN -> false
