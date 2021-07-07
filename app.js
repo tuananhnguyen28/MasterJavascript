@@ -49,3 +49,48 @@ function getName(value) {
 // Symbol (ES6)
 let sym = Symbol() // 1 constructor có sẵn trong javascript
 console.log(sym)
+
+
+// 2. Kiểu object
+
+// Plain Object
+var person = { name: 'Tuan', age: 28 }
+
+// Array
+var products = ['Iphone', 'Samsung', 'Xiaomi']
+
+// Regular Expression (được coi là objecy)
+var regex = /ab+c/
+
+// function (cũng được coi là một object)
+function sum(a, b) {
+  return a + b
+}
+
+// Nhưng kiểu của function là function, không phải object
+console.log(typeof sum === 'function')
+
+// null không được coi là object mặc dù kiểu của nó là object
+console.log(typeof null === 'object')
+
+// Có thể tạo một object cho boolean, number, string bằng các wrapper object như String, Number, Boolean
+var str = new String('Tuan')
+console.log(typeof str)
+console.log(str)
+console.log(str.valueOf())
+console.log(str === 'Tuan') // false: bởi vì str là một object kiểu String
+var num = new Number(1993)
+var b = new Boolean(true)
+
+/*
+  Các constructor String, Number, Boolean có thể đóng vai trò như một function
+  để chuyển đổi về giá trị nguyên thuỷ (hay còn gọi là ép kiểu)
+*/
+let valString, valNumber, valBoolean
+valString = String(1993) // ép về kiểu string
+console.log(valString)
+valNumber = Number(1993)
+console.log(valNumber)
+valBoolean = Boolean(0)
+console.log(valBoolean)
+// Boolean(0) -> false, Boolean(-1) -> true, Boolean([]) -> true, Boolean({}) -> true
