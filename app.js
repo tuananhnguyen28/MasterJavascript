@@ -94,3 +94,33 @@ console.log(valNumber)
 valBoolean = Boolean(0)
 console.log(valBoolean)
 // Boolean(0) -> false, Boolean(-1) -> true, Boolean([]) -> true, Boolean({}) -> true
+
+
+// 3. Tham trị và tham chiếu
+
+// 3.1 Tham trị đối với primitive data type
+let _a1 = 1
+let _b1 = _a1
+_b1 = 2
+console.log('_a1 =', _a1)
+console.log('_b1 =', _b1)
+
+let _name = 'Tuan'
+const change = (value) => {
+  value = 'Txt'
+}
+change(_name)
+console.log('_name:', _name) // Tuan
+
+// 3.2 Tham chiếu đối với object (xem kết hợp với video clip)
+let cars1 = ['BMW', 'Mercedes']
+let cars2 = cars1
+cars2 = ['Toyota', 'Hyunday']
+console.log(cars1) // ['BMW', 'Mercedes']
+console.log(cars2) // ['Toyota', 'Hyunday']
+
+let objectPerson1 = { name: 'Tuan', age: 28 }
+let objectPerson2 = objectPerson1
+objectPerson2.age = 25
+console.log(objectPerson1) // { name: 'Tuan', age: 25 }
+console.log(objectPerson2) // { name: 'Tuan', age: 25 }
