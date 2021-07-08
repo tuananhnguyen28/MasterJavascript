@@ -112,7 +112,7 @@ const change = (value) => {
 change(_name)
 console.log('_name:', _name) // Tuan
 
-// 3.2 Tham chiếu đối với object (xem kết hợp với video clip)
+// 3.2 Tham chiếu đối với object
 let cars1 = ['BMW', 'Mercedes']
 let cars2 = cars1
 cars2 = ['Toyota', 'Hyunday']
@@ -138,3 +138,6 @@ let falsyVal
 falsyVal = ''
 console.log(Boolean(falsyVal))
 // '' -> false, 0 -> false, null -> false, undefined -> false, NaN -> false
+
+// Lưu ý: tham khảo thêm giải thích về tham chiếu thông qua sơ đồ và ví dụ ở website bên dưới:
+// https://xdevclass.com/ban-da-thuc-su-hieu-ve-tham-tri-va-tham-chieu-javascript/
