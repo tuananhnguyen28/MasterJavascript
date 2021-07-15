@@ -78,3 +78,66 @@ _admin.f = _SayHi
 _user.f()
 _admin.f()
 _admin['f']()
+
+
+// 3. Arrow function: không có 'this'
+'use strict'
+function handle1() {
+    console.log(this)
+}
+const handle2 = () => { // this sẽ trỏ đến object global (Windows)
+    console.log(this)
+}
+handle1() // undefined
+handle2() // Windows
+
+// arrow() sử dụng this bên ngoài arrow(), tức là object gần nhất
+let user6 = {
+    firstName: 'Nguyen',
+    SayHi() {
+        let arrow = () => console.log(this.firstName)
+        arrow()
+        // Còn đối với function bình thường, this.firstName = undefined
+    }
+}
+user6.SayHi()
+
+
+// 4. This trong callback
+
+// This trong trường hợp này sẽ không đề cập đến object
+const delay = {
+    firstName: 'Nguyen Anh',
+    print() {
+        console.log(this) // {firstName: "Nguyen Anh", print: f}
+        setTimeout(function () {
+            console.log(this) // Windows
+            console.log('This for callback:', this.firstName)
+        }, 1000)
+    }
+}
+delay.print()
+
+// Để fix vấn đề này, dùng arrow function
+const delay_fixed = {
+    firstName: 'Nguyen Anh',
+    print() {
+        setTimeout(() => {
+            console.log(this) // {firstName: "Nguyen Anh", print: f}
+            console.log('This for fixed arrow function:', this.firstName)
+        }, 2000)
+    }
+}
+delay_fixed.print()
+
+// this trong callback không đề cập đến function chứa callback đó
+function broke(func) {
+    const obj = {
+        name: 'Tuan',
+        func
+    }
+    return obj.func()
+}
+broke(function() {
+    console.log('callback in function: ', this) // obj
+})
