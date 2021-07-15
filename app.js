@@ -1,3 +1,4 @@
+/*
 // 1. Object method
 
 // Một function là một thuộc tính của object thì gọi là method
@@ -17,8 +18,9 @@ user2 = {
     }
 }
 user2.SayHi()
+*/
 
-
+/*
 // 2. This
 
 // This trong 'method': giá trị của this là object trước dấu chấm
@@ -40,12 +42,13 @@ let user4 = {
     }
 }
 user4.SayHi()
+*/
 
 /*
     Nếu chúng ta muốn copy user sang một biến khác
     Ví dụ: admin = user và sau đó ghi đè user, như vậy sẽ truy cập đến một object sai
     Nên sử dụng từ khoá 'this' trong mọi trường hợp
-*/ 
+*/
 let user5 = {
     name: 'Tuan 5', 
     age: 28,
@@ -79,7 +82,7 @@ _user.f()
 _admin.f()
 _admin['f']()
 
-
+/*
 // 3. Arrow function: không có 'this'
 'use strict'
 function handle1() {
@@ -101,8 +104,9 @@ let user6 = {
     }
 }
 user6.SayHi()
+*/
 
-
+/*
 // 4. This trong callback
 
 // This trong trường hợp này sẽ không đề cập đến object
@@ -141,3 +145,4 @@ function broke(func) {
 broke(function() {
     console.log('callback in function: ', this) // obj
 })
+*/
