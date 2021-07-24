@@ -47,3 +47,81 @@ let arr5_result = arr5.shift()
 console.log('Mảng arr4 ban đầu:', arr5)
 console.log('Xóa phần tử đầu tiên của mảng, return lại phần tử vừa xóa:', arr5_result)
 
+
+// Từ khóa delete
+// Sau khi xóa phần tử khỏi mảng, sẽ để lại khoảng trống, sau khi truy cập đến phần tử này, sẽ có giá trị là undefined
+const arr6 = ['Banana', 'Orange', 'Lemon', 'Kiwi']
+delete arr6[1]
+console.log('Mảng arr6:', arr6)
+console.log('Giá trị phần tử arr6[1]:', arr6[1])
+
+// splice(vị trí thêm, số lượng cần xoá, ... phần tử thêm) -> return mảng các phần tử đã xóa
+const arr7 = ['Banana', 'Orange', 'Lemon', 'Kiwi']
+let arr7_result = arr7.splice(0, 1, 'Apple', 'Loeo')  // nếu số lượng cần xóa = 0 -> []
+console.log('Các phần tử đã xóa (splice):', arr7_result)
+console.log('Mảng arr7 sau khi thêm các elements bắt đầu tại vị trí đã xóa:', arr7)
+
+// slice(vị trí bắt đầu, vị trí kết thúc) không thay đổi mảng gốc, tách ra một mảng mới từ mãng cũ
+const arr8 = ['Banana', 'Orange', 'Lemon', 'Kiwi']
+let arr8_result = arr8.slice(2)
+console.log('Mảng mới sau khi tách từ vị trí đầu tiên đến vị trí cuối (slice):', arr8_result)
+console.log('Mảng gốc:', arr8)
+
+const arr9 = ['Banana', 'Orange', 'Lemon', 'Kiwi']
+let arr9_result = arr9.slice(1, 3) // tách từ vị trí 1 đến vị trí 2 (vị trí cuối + thêm 1)
+console.log('Mảng sau khi tách từ vị trí 1 đến vị trí 2:', arr9_result)
+
+// concat(): tạo mảng mới bằng cách nối các mảng cũ
+const myGirls = ['Celcile', 'Moowr']
+const myBoys = ['Joinle', 'Heaw', 'Boid']
+const myGirlsAndBoys = myGirls.concat(myBoys)
+// có thể truyền vào chuỗi hoặc item
+const myGirlsAndBoys_2 = myGirls.concat('New Item 1', 'New Item 2')
+console.log('Mảng sau khi dùng concat():', myGirlsAndBoys)
+console.log('Mảng sau khi dùng concat(), thêm vào item:', myGirlsAndBoys_2)
+
+// spread operator: cú pháp 3 dấu chấm
+// Dùng để nối mảng hoặc tạo thành một mảng mới
+const cars1 = [1, 2, 3]
+const cars2 = [4, 5, 6]
+const newCars1Cars2 = [...cars1, ...cars2]
+console.log('Mảng mới, dùng dấu 3 chấm để nối mảng:', newCars1Cars2)
+
+// Khi so sánh tham chiếu, hai mảng sẽ không bằng giá trị, chỉ giống về kiểu
+const cars3 = [4, 5, 6]
+console.log(cars2 === cars3) // false
+cars4 = cars2
+console.log(cars4 === cars2) // true, do gán mảng cars2 cho cars4, cả 2 mảng đều trỏ cùng 1 địa chỉ nên bằng nhau về giá trị
+
+// forEach
+const numbers = [1, 2, 3, 4, 5]
+let newNumbers1 = [], newNumbers2 = []
+for(let i = 0; i < numbers.length; i++) {
+  newNumbers1.push(numbers[i])
+}
+console.log('newNumbers1:', newNumbers1)
+// dùng forEach
+numbers.forEach((value, index) => {
+  newNumbers2.push(value)
+})
+console.log('newNumbers2:', newNumbers2)
+/*
+  // Lưu ý: vòng lặp for có thể dừng lại được theo điều kiện trong vòng lặp, còn forEach thì không
+  // Example:
+let _numbers = [4, 3, 6, 2, 10]
+let _newNumbers1 = [], _newNumbers2
+for(let i = 0; i < _numbers.length; i++) {
+  if(i === 2) {
+    break
+  }
+  _newNumbers1.push(_numbers[i])
+}
+console.log('for dùng điều kiện:', _newNumbers1)
+_numbers.forEach((value, index) => {
+  if(value === 2) {
+    break
+  }
+  _newNumbers2.push(_numbers)
+})
+console.log('forEach dùng điều kiện:', _newNumbers2) // Uncaught SyntaxError: Illegal break statement
+*/
