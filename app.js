@@ -125,3 +125,50 @@ _numbers.forEach((value, index) => {
 })
 console.log('forEach dùng điều kiện:', _newNumbers2) // Uncaught SyntaxError: Illegal break statement
 */
+
+// map(): tạo một mảng mới bằng cách thực hiện tính toán trên từng phần tử. map() không thay đổi mảng cũ
+const oldArray1 = [1, 2, 3, 4, 5]
+const newArray1 = oldArray1.map((value, index, array) => {
+  console.log(value, index, array)
+  return value * 2
+})
+console.log('---------------------------------')
+console.log('Mảng mới sau khi dùng map():', newArray1)
+
+// filter(): tạo một mảng mới với những phần tử thỏa điều kiện
+const oldArray2 = [1, 2, 3, 4, 5]
+const newArray2 = oldArray2.filter((value, index) => {
+  if(value >= 3)
+    return true
+  else
+    return false
+})
+console.log('---------------------------------')
+console.log('Mảng mới sau khi dùng filter():', newArray2)
+
+// find(): trả về phần tử thỏa điều kiện đầu tiên, nếu không có sẽ return 'undefined'
+const oldArray3 = ['Apple', 'Orange', 'Banana', 'Kiwi']
+const newArray3 = oldArray3.find((value, index) => value === 'Orange')
+console.log('---------------------------------')
+console.log('Phần tử Orange đầu tiên:', newArray3)
+
+// findIndex(): trả về vị trí của phần tử đầu tiên thỏa điều kiện. Nếu không có return -1
+const oldArray4 = ['BMW', 'Honda', 'Hyundai', 'Toyota']
+const newArray4 = oldArray4.findIndex((value, index) => value === 'Hyundai')
+console.log('---------------------------------')
+console.log(`Vị trí của phần tử 'Hyundai' đầu tiên:`, newArray4)
+
+// indexOf(): trả về vị trí của phần tử trong mảng. Nếu không có return -1
+const oldArray5 = [1, 2, 3, 4, 5, 6]
+const newArray5 = oldArray5.indexOf(5)
+console.log('---------------------------------')
+console.log(`Vị trí của phần tử số 5 trong mảng:`, newArray5)
+
+// every(): nếu mọi phần tử thỏa điều kiện thì return true, ngược lại false
+const oldArray6 = [1, 2, 3]
+const newArray6_True = oldArray6.every((value, index) => value > 0)
+const newArray6_False = oldArray6.every((value, index) => value > 2)
+console.log('---------------------------------')
+console.log('Array:', oldArray6)
+console.log('Các phần tử thỏa điều kiện > 0 (dùng every):', newArray6_True)
+console.log('Các phần tử không thỏa điều kiện > 2 (dùng every):', newArray6_False)
