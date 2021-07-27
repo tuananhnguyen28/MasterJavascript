@@ -164,11 +164,112 @@ const newArray5 = oldArray5.indexOf(5)
 console.log('---------------------------------')
 console.log(`Vị trí của phần tử số 5 trong mảng:`, newArray5)
 
-// every(): nếu mọi phần tử thỏa điều kiện thì return true, ngược lại false
+// every(): nếu mọi phần tử thỏa điều kiện thì return true, ngược lại false (dừng vòng lặp)
 const oldArray6 = [1, 2, 3]
 const newArray6_True = oldArray6.every((value, index) => value > 0)
 const newArray6_False = oldArray6.every((value, index) => value > 2)
 console.log('---------------------------------')
 console.log('Array:', oldArray6)
 console.log('Các phần tử thỏa điều kiện > 0 (dùng every):', newArray6_True)
-console.log('Các phần tử không thỏa điều kiện > 2 (dùng every):', newArray6_False)
+console.log('Một phần tử không thỏa điều kiện > 2 (dùng every):', newArray6_False)
+
+
+// some(): nếu một phần tử thỏa điều kiện, return true (dừng vòng lặp), ngược lại return false
+const oldArray7 = [2, 5]
+const newArray7_True = oldArray7.some((value, index) => value % 2 === 0)
+const newArray7_False = oldArray7.some((value, index) => value % 3 === 0)
+console.log('---------------------------------')
+console.log('Array:', oldArray7)
+console.log('Ít nhất một phần tử thỏa điều kiện chia hết cho 2 (dùng some):', newArray7_True)
+console.log('Không có phần tử nào thỏa điều kiện chia hết cho 3 (dùng every):', newArray7_False)
+
+
+// include(): kiểm tra một phần tử có trong mảng hay không
+console.log('---------------------------------')
+const oldArr1 = [1, 2, 3, 4, 5]
+const checkIncludes = oldArr1.includes(6) // false
+console.log('Check Number 6 in [1, 2, 3, 4, 5] (Includes):', checkIncludes)
+// Tương tự với indexOf -> oldArr1.indexOf(6) > -1
+
+/*
+  Lưu ý: 
+    - Thường thì các method với string, array không thay đổi giá trị gốc.
+    - Ngoại trừ: pop, push, shift, unshift, delete, sort
+*/
+
+// reverse(): đảo ngược thứ tự các element trong array
+console.log('---------------------------------')
+const oldArr2 = [1, 2, 3, 4, 5]
+const handleReverse = oldArr2.reverse()
+console.log('Mảng [1, 2, 3, 4, 5] sau khi reverse:', handleReverse)
+
+// sort(): sắp xếp mảng tăng dần hay giảm dần
+const names = ['Binh', 'An', 'Dat']
+names.sort()
+console.log('---------------------------------')
+console.log(`Mảng ['Binh', 'An', 'Dat'] sau khi sort:`, names)
+
+/*
+  Đối với number, không thể sort 'number' chính xác vì nó sẽ compare theo kiểu string. Ex: 25>100 vì 2 lớn hơn 1.
+  Cách giải quyết: cung cấp một compare function.
+  Dạng: function(a, b){ return a - b }
+  Ý nghĩa: Nếu kết quả là âm, a sẽ đứng trước b, dương thì b sẽ đứng trước a, nếu kq=0 thì sẽ không thay đổi vị trí
+  a - b: tăng dần | b - a: giảm dần
+*/
+const names_before_sort_1 = [3, 6, 40, 2]
+const names_before_sort_2 = [5, 1, 10, 4]
+console.log('---------------------------------')
+const hanleSort = names_before_sort_1.sort()
+console.log(`Mảng [3, 6, 40, 2] sau khi sort như thông thường:`, hanleSort)
+// Fixing
+const numberSortAscending = names_before_sort_1.sort((a, b) => a - b)
+const numberSortDescending = names_before_sort_2.sort((a, b) => b - a)
+console.log(`Mảng [3, 6, 40, 2] sau khi sort tăng dần (compare function):`, numberSortAscending)
+console.log(`Mảng [3, 6, 40, 2] sau khi sort giảm dần (comapre function):`, numberSortDescending)
+
+// reduce(): dùng để xử lý một mảng cho trước thành mảng hay object khác
+const points = [1, 2, [3, 4], 5, 6]
+/*
+  Làm phẳng thành một mảng duy nhất bằng cách dùng callback function
+  - []: giá trị khởi tạo là một mảng
+  - total sẽ lấy mảng []
+  - current là giá trị của phần tử [index] đầu tiên
+  - currIndex: phần tử [index]
+  - tiếp tục lặp cho hết mảng
+  - phải return, nếu không return thì total đầu tiên = undefined -> không thực hiện được vòng lặp tiếp theo
+  - Template có initialValue
+    arr.reduce((total, current, currentIndex) => {
+      return something
+    }, initialValue)
+*/
+console.log('---------------------------------')
+const result_Reduce = points.reduce((total, current, currIndex) => {
+  console.log('total:', total)
+  console.log('current:', current)
+  console.log('total.concat(current):', total.concat(current))
+  return total.concat(current)
+}, [])
+console.log('Mảng sau khi được làm phẳng (reduce)', result_Reduce)
+
+// Chuyển một array thành object (reduce())
+const ori_array = [1, 2, [3, 4, 5], 6, 7, 8]
+const ori_array_reduce_to_object = ori_array.reduce((total, current, currIndex) => {
+  total[currIndex] = current
+  return total
+}, {})
+console.log('---------------------------------')
+console.log('Mảng ori_aray:', ori_array)
+console.log('Mảng ori_array sau khi chuyển thành object:', ori_array_reduce_to_object)
+
+/*
+  Nếu không dùng initialValue thì đầu tiên total = arr[0] và current = arr[1].
+  Tức là currentIndex sẽ chạy từ 1 cho đến hết
+  Example:
+*/
+const other_ori_array = [1, 2, 3]
+const ori_array_not_initial_value = other_ori_array.reduce((total, current) => {
+  return total + current
+})
+console.log('---------------- reduce() -----------------')
+console.log(`Mảng [1, 2, 3] khi không dùng initialValue:`, ori_array_not_initial_value)
+console.log('---------------- THE END LESSON 13 -----------------')
