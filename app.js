@@ -68,3 +68,33 @@ const secondLevelObject = {
 const shallowCopyForSecondLevelObject = {...secondLevelObject}
 shallowCopyForSecondLevelObject.ability[0] = 'Programming-Changed'
 console.log('After: secondLevelObject:',secondLevelObject) // đã thay đổi thuộc tính
+
+
+// Bổ sung cho merge object
+const fruits = {
+  name: 'Orange',
+  color: ['Yellow']
+}
+const _fruits = {
+  name: 'Apple',
+  color: ['Green']
+}
+/*
+  cách merge 1: 
+    - chỉ gôm tất cả các thuộc tính của 2 objects (ngoại trừ thuộc tính cấp thứ 2 của object 1)
+    - gán cho object thứ 2
+    - không làm thay đổi giá trị của object thứ 1
+*/
+let fruits2 = { ...fruits, color: ['Yellow 2'], height: '50 grams' }
+console.log('fruits === fruits2 ->',fruits === fruits2)
+console.log('fruits:', fruits)
+console.log('fruits2:', fruits2)
+/*
+  cách merge 2:
+    - gôm tất cả thuộc tính của 2 objects (ngoại trừ thuộc tính cấp thứ 2 của object 1)
+    - gán giá trị đã gôm cho cả 2 object
+*/
+let _fruits2 = Object.assign(_fruits, { color: 'Green 2', height: '100 grams' })
+console.log('_fruits === _fruits2 ->',_fruits === _fruits2)
+console.log('_fruits:', _fruits)
+console.log('_fruits2:', _fruits2)
