@@ -98,3 +98,30 @@ let _fruits2 = Object.assign(_fruits, { color: 'Green 2', height: '100 grams' })
 console.log('_fruits === _fruits2 ->',_fruits === _fruits2)
 console.log('_fruits:', _fruits)
 console.log('_fruits2:', _fruits2)
+
+
+// Object.keys(): trả về mảng các key của object
+const cars = {
+  brand: ['BMW', 'Toyota'],
+  color: 'Black Silver'
+}
+const cars1 = Object.keys(cars).map((key, index) => {
+  return `Key [${index}] có key là ${key} và value = ${cars[key]}`
+})
+console.log(cars1)
+
+// Object.value(): trả về mảng các value của object
+const cars2 = Object.values(cars).map((value, index) => {
+  return `[${index}] có value = ${value}`
+})
+console.log(cars2)
+
+// Lặp object với for in (dùng thuần)
+const object = {
+  brand: ['BMW', 'Toyota'],
+  color: 'Black'
+}
+console.log('----- Lặp object với for in -----')
+for (const key in object) {
+  console.log(object[key]) // truy cập value của mỗi thuộc tính thông qua key
+}
