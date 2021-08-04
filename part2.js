@@ -165,3 +165,17 @@ const TimSoFibonacciThuN = (n) => {
 TimSoFibonacciThuN(10)
 
 // 8.
+const TimSoFibonacci = (n) => {
+  if(n === 1 || n === 2) {
+    return 1
+  }
+  return TimSoFibonacciThuN(n - 1) + TimSoFibonacciThuN(n - 2)
+}
+const TinhTongSoFibonnaciDauTien = (n) => {
+  let sum = 0
+  for(i = 1; i < n; i++) {
+    sum += TimSoFibonacci(i)
+  }
+  return sum
+}
+TinhTongSoFibonnaciDauTien(12)
