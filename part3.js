@@ -83,3 +83,81 @@
         }
       ]
 */
+
+/*
+  Solve exercises
+*/
+
+// 1.
+const CallBack = (num, func) => {
+  let result = []
+  for(let i = 0; i < num; i++) {
+    if(func(i)) {
+      result.push(i)
+    }
+  }
+  return result
+}
+// Can test each call function
+CallBack(10, (number) => number % 2 !== 0)
+// CallBack(20, (number) => number % 2 === 0)
+// CallBack(30, (number) => number % 3 === 2)
+
+
+// 2. Áp dụng kỹ thuật currying
+const Currying = (num) => (func) => {
+  let result = []
+  for(let i = 0; i < num; i++) {
+    if(func(i)) {
+      result.push(i)
+    }
+  }
+  return result
+}
+Currying(10)((number) => number % 2 !== 0)
+// Currying(20)((number) => number % 2 === 0)
+// Currying(30)((number) => number % 3 === 2)
+
+
+// 3.
+const TimGiaTriLonNhatTrongMang = (array) => {
+  let max = array[0]
+  for(let i = 0; i < array.length; i++) {
+    if(array[i] > max)
+      max = array[i]
+  }
+  return max
+}
+TimGiaTriLonNhatTrongMang([1, 10, 5, 20, 14, 2, 6])
+
+
+// 4. 
+const CacSoNguyenChanNhoHon2004 = (array) => {
+  for(let i = 0; i < array.length; i++) {
+    if(array[i] % 2 === 0 && array[i] < 2004)
+      return true
+  }
+  return false
+}
+if(CacSoNguyenChanNhoHon2004([5, 2005, 1003, 5, 5 , 1, 1, 16]))
+  console.log('Có số chẵn nhỏ hơn 2004 trong mảng!')
+else
+  console.log('Không có số chẵn nhỏ hơn 2004 trong mảng!')
+  
+
+// 5.
+const MangMotChieuTangDan = (array) => {
+  return array.sort((a, b) => a - b) // if descreasing: b - a
+}
+MangMotChieuTangDan([1, 5, 4, 3, 10, 8])
+
+
+// 6.
+const TinhTongCacPhanTu = (array) => {
+  let sum = 0
+  array.forEach((item) => {
+    sum += item
+  })
+  return sum
+}
+console.log('Tổng các phần tử trong mảng [1, 5, 10, 2, 3] =', TinhTongCacPhanTu([1, 5, 10, 2, 3]))
