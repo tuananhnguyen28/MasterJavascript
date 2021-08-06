@@ -161,3 +161,95 @@ const TinhTongCacPhanTu = (array) => {
   return sum
 }
 console.log('Tổng các phần tử trong mảng [1, 5, 10, 2, 3] =', TinhTongCacPhanTu([1, 5, 10, 2, 3]))
+
+
+// 7. Viết hàm nhận vào 2 mảng a, b. Return về 1 mảng mới chứa các giá trị chỉ xuất hiện 1 trong 2 mảng.
+const a7 = (array1, array2) => {
+  let result = []
+  array1.forEach((item) => {
+    if(!array2.includes(item)) {
+      result.push(item)
+    }
+  })
+  array2.forEach((item) => {
+    if(!array1.includes(item)) {
+      result.push(item)
+    }
+  })
+  return result
+}
+a7([1, 2, 3, 4, 5], [2, 4, 6, 7, 8])
+
+
+// 8. Viết hàm nhận vào 1 string và trả về một Capitalize string. Ví dụ: 'du thanh duoc' -> 'Du Thanh Duoc'
+const a8 = (str) => 
+  str
+    .split(' ')
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+    .join(' ')
+a8('nguyen anh tuan')
+
+
+// 9. Viết hàm nhận vào 1 string và trả về một reverse string. Ví dụ: 'duoc' -> 'coud'
+// Cách 1.
+const reverse1 = (str) => [...str].reverse().join('')
+reverse1('nguyen anh tuan')
+// Cách 2.
+const reverse2 = (str) => {
+  let result = ''
+  for (let i = 0; i < str.length; i++) {
+    // lấy từng ký tự từ cuối mảng và push lần lượt vào mảng ban đầu
+    result += str.charAt(str.length - i - 1)
+  }
+  return result
+}
+reverse2('nguyen anh tuan')
+
+
+// 10. Viết hàm kiểm tra nhận vào 2 chuỗi và kiểm tra có phải là reverse string của nhau hay không
+// Cách 1: dùng for loop
+const compare1 = (str1, str2) => {
+  lenght1 = str1.length
+  lenght2 = str2.length
+  if(lenght1 === lenght2) {
+    for(let i = 0; i < lenght1; i++) {
+      if(str1[i] !== str2[lenght2 - i -1]) {
+        return false
+      }
+    }
+    return true
+  }
+  return false
+}
+compare1('tuan', 'naut')
+// Cách 2: dùng 'every' method
+const compare2 = (str1, str2) => {
+  if(str1.length === str2.length) {
+    return [...str1].every((char, index) => char === str2.charAt(str2.length - index - 1))
+  }
+  return false
+}
+compare2('naut', 'tuan')
+
+
+// 11. Không cần làm vì code tương đối khó hiểu -> ignore
+
+
+// 12. 
+// Cách 1: dùng 'includes' method
+const replace1 = (string, array, target) => {
+  const tempArray = array.map(item => item.toLowerCase()) // ["nguyen", "anh"]
+  const stringToArray = string.split(' ') // ["nguyen", "anh", "tuan"]
+  stringToArray.map((item, index) => {
+    if (tempArray.includes(item.toLowerCase())) {
+      stringToArray[index] = target // thay thể nội dung của 'target' vào vùng bị lặp theo index
+    }
+  })
+  return stringToArray.join(' ')
+}
+replace1('nguyen anh tuan', ['nguyen', 'anh'], 'vip')
+// Cách 2: dùng Regex
+const replace2 = (string, array, target) => {
+  return string.replace(new RegExp(array.join('|'), 'gi'), target)
+}
+replace2('nguyen anh tuan', ['nguyen', 'anh'], 'vip')
