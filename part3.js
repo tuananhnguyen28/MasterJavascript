@@ -253,3 +253,103 @@ const replace2 = (string, array, target) => {
   return string.replace(new RegExp(array.join('|'), 'gi'), target)
 }
 replace2('nguyen anh tuan', ['nguyen', 'anh'], 'vip')
+
+
+// 13. 
+const ArrayToObject_13 = (array) => {
+  let resultObj = { name: [], age: [] }
+  array.forEach((item) => {
+    resultObj.name.push(item.name)
+    resultObj.age.push(item.age)
+  })
+  return resultObj
+}
+ArrayToObject_13([
+  { name: 'A', age: 1 },
+  { name: 'B', age: 2 },
+  { name: 'C', age: 3 }
+])
+
+
+// 14. Viết hàm tính tổng tiền lương, nếu object rổng thì tổng là 0
+const tienLuongInput = (object) => {
+  let tienLuong = 0
+  for(const key in object) {
+    tienLuong += object[key]
+  }
+  return tienLuong
+}
+tienLuongInput({
+  An: 100,
+  My: 200,
+  Nga: 300,
+  Huy: 150
+})
+
+
+// 15. Viết hàm trả về 1 mảng sắp xếp danh sách tăng dần theo chỉ số như name hoặc price. Ví dụ handle(input, 'name')
+const input_15_1 = [
+  {
+    name: 'Tivi',
+    price: 500
+  },
+  {
+    name: 'Dien thoai',
+    price: 100
+  },
+  {
+    name: 'Quan ao',
+    price: 80
+  }
+]
+// Sắp xếp giá tăng dần
+input_15.sort(function(a, b) {
+  return a.price - b.price
+})
+// Sắp xếp tên tăng dần
+const input_15_2 = [
+  {
+    name: 'Tivi',
+    price: 500
+  },
+  {
+    name: 'Dien thoai',
+    price: 100
+  },
+  {
+    name: 'Quan ao',
+    price: 80
+  }
+]
+input_15_2.sort(function(a, b) {
+  let x = a.name.toLowerCase();
+  let y = b.name.toLowerCase();
+  if(x < y) { return -1 }
+  if(x > y) { return 1 }
+  return 0 // tên giống nhau
+})
+
+
+// 16. tương tự 15
+
+
+// 17. Viết hàm trả về 1 mảng mới chứa những bất động sản có giá trên 100
+const a17 = (array) => {
+  return array.filter((item) => {
+    return item.price > 100
+  })
+}
+a17([
+  {
+    name: 'Khu 1',
+    price: 500
+  },
+  {
+    name: 'Khu 2',
+    price: 100
+  },
+  {
+    name: 'Khu 3',
+    price: 80
+  }
+])
