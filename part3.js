@@ -1,4 +1,9 @@
 /*
+  Đọc câu hỏi cũng như bài tập, sau đó kiểm tra lại bằng Console tab trên trình duyệt để hiểu các khái niệm
+    - https://github.com/dtdgroup/Javascript/blob/master/0.%20Bai%20tap/Can%20ban/3.md
+*/
+
+/*
   Phần 3: Thao tác với number, string, array, object và class trong Javascript
 
     1. Bài tập
