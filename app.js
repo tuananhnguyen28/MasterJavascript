@@ -1,15 +1,22 @@
-// Cookie: cho phép bạn lưu trữ thông tin người dùng website vào máy tính của bạn
+// 1. Cookie: cho phép bạn lưu trữ thông tin người dùng website vào máy tính của bạn
 
-// tạo cookie
-document.cookie = 'username=Tuan Nguyen'
+/* Coding:
+  // tạo cookie
+  document.cookie = 'username=Tuan Nguyen'
+  document.cookie = 'password=123456@123'
+*/
 
-// // thêm thời gian hết hạn (dạng UTC)
-// const date = new Date(2021, 8, 18).toString()
-// document.cookie = `username=Nguyen Tuan; expires=${date}; path=/`
+/* Coding:
+  // thêm thời gian hết hạn (dạng UTC)
+  const date = new Date(2021, 8, 18).toString()
+  document.cookie = `username=Nguyen Tuan; expires=${date}; path=/`
+*/
 
-// // xóa một cookie, chỉ cần set thời gian hết hạn (01 Jan 1970)
-// document.cookie = 'username=Nguyen Tuan, expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'
-// console.log(document.cookie)
+/* Coding:
+  // xóa một cookie, chỉ cần set thời gian hết hạn (01 Jan 1970)
+  document.cookie = `username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+  console.log(document.cookie)
+*/
 
 /*
   - Nếu set 1 cookie mới, tất cả các cookie cũ sẽ không bị thay thế, cookie mới sẽ được thêm vào document.cookie
