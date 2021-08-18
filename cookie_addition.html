@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bổ sung kiến thức và ví dụ về cookie</title>
+</head>
+<body>
+  <h1>Bổ sung kiến thức và ví dụ về cookie</h1>
+  <script>
+
+    function createCookie(name, value, expDay) {
+
+      let now = new Date()  // lấy thời gian hiện tại
+      now.setTime(now.getTime() + expDay * 24 * 60 * 60 * 1000) // thời gian hết hạn tính theo miliseconds
+
+      document.cookie = name + "=" + value + ";expires=" + now.toUTCString() + ";path=/"
+      console.log(document.cookie)
+
+    }
+
+    function updateCookie(name, value) {
+
+      document.cookie = name + "=" + value
+      console.log(document.cookie)
+
+    }
+
+    function deleteCookie(name) {
+
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+
+    }
+
+    function getCookie(name) {
+
+      let cookieStr = document.cookie
+      if(cookieStr) {
+        let cookieArr = cookieStr.split(";")  // lấy ra những cặp key-value và đưa vào trong mảng
+        for(let i = 0; i < cookieArr.length; i++) {
+          let keyValueArr = cookieArr[i].split("=") // tách ra thành 3 mảng, mỗi mảng là 1 cặp key-value
+          if(keyValueArr[0].trim() == name) {
+            return cookieArr[i]
+          }
+        }
+      }
+
+    }
+
+    // createCookie("trackingId", "123456")
+    // updateCookie("trackingId", "no12315")
+    // deleteCookie("trackingId")
+    getCookie("username")
+
+  </script>
+</body>
+</html>
