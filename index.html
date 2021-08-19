@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <title>Project Tab</title>
+  <style>
+    .tab-content-item {
+      display: none;
+      width: 300px;
+    }
+
+    .tab-content-item.active {
+      display: block;
+    }
+
+    .tab-content-item img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Project Tab</h1>
+  <div class="container">
+    <div class="navtab mb-3">
+      <button class="btn btn-secondary navtab-btn active" id="1">Quần Áo</button>
+      <button class="btn btn-secondary navtab-btn" id="2">Giày Dép</button>
+      <button class="btn btn-secondary navtab-btn" id="3">Mỹ Phẩm</button>
+    </div>
+    <div class="tab-content">
+      <div class="tab-content-item active" data-tab="1">
+        <img src="https://cf.shopee.vn/file/0d30cd512491fe280e71cca803a7bb60" alt="">
+      </div>
+      <div class="tab-content-item" data-tab="2">
+        <img src="https://vn-live-01.slatic.net/original/2dbd60e52589cb9a3f906b4ca0a5bcd7.jpg" alt="">
+      </div>
+      <div class="tab-content-item" data-tab="3">
+        <img src="https://goodstart.vn/wp-content/uploads/2018/09/c%C3%B4ng-b%E1%BB%91-m%E1%BB%B9-ph%E1%BA%A9m.jpg" alt="">
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
