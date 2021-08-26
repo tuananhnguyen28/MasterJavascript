@@ -1,3 +1,24 @@
+// Add hàm xử lý 'Kỳ trả nợ' tương ứng với mỗi tháng (dòng)
+const handlePeriod = (period, dateString, month) => {
+  if(month === 0) {
+    const currentDate = new Date(dateString)
+    period.push(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`)
+  } else {
+    const pre = new Date(dateString)
+    let month = pre.getMonth() + 2,
+      year = pre.getFullYear(),
+      date = pre.getDate()
+    if(month > 12) {
+      month = 1
+      year += 1
+    }
+    // Do một số tháng không có đủ ngày -> cộng thêm 1 ngày qua tháng sau
+    const currentDate = new Date(`${year}-${month}-${date}`)
+    period.push(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`)
+  }
+  return period[month]
+}
+
 // Bắt sự kiện submit của form
 document.querySelector('form').addEventListener('submit', event => {
 
@@ -28,12 +49,15 @@ document.querySelector('form').addEventListener('submit', event => {
   document.getElementById('interest').value = interest.toLocaleString()
   document.getElementById('originalAndInterest').value = originalAndInterest.toLocaleString()
 
+  // Khai báo biến 'period' dạng array để load tất cả các tháng ở colum 'Kỳ trả nợ'
+  const period = []
+
   // Dùng vòng lặp for để display tương ứng với số tháng
   for(let i = 0; i <= months; i++) {
     if(i === 0) {
       html = `
         <td>${i}</td>
-        <td></td>
+        <td>${handlePeriod(period, disbursementDate, i)}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -48,7 +72,7 @@ document.querySelector('form').addEventListener('submit', event => {
       const originalAndInterestPerMonth = originalPerMonth + interestPerMonth
       html = `
         <td>${i}</td>
-        <td></td>
+        <td>${handlePeriod(period, period[i - 1], i)}</td>
         <td>${originalPerMonth}</td>
         <td>${interestPerMonth}</td>
         <td>${originalAndInterestPerMonth}</td>
@@ -62,7 +86,7 @@ document.querySelector('form').addEventListener('submit', event => {
       const remainingOriginal = loan - originalPerMonth * i
       html = `
         <td>${i}</td>
-        <td></td>
+        <td>${handlePeriod(period, period[i - 1], i)}</td>
         <td>${originalPerMonth}</td>
         <td>${interestPerMonth}</td>
         <td>${originalAndInterestPerMonth}</td>
