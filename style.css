@@ -1,0 +1,7 @@
+.user, #computer {
+  font-size: 5rem;
+}
+
+.user{
+  min-width: 130px;
+}
