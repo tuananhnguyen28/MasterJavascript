@@ -5,3 +5,8 @@
 .user{
   min-width: 130px;
 }
+
+#notification {
+  max-width: 300px;
+  margin: auto;
+}
