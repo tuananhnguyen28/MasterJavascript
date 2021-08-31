@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <title>Project Todo</title>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center text-info">Todo List</h1>
+    <form>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="name" placeholder="Name" style="font-style: italic">
+      </div>
+      <button class="btn btn-primary w-100">
+        Add
+      </button>
+    </form>
+
+    <h2 class="text-center mb-3">List</h2>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="filter" placeholder="Filter" style="font-style: italic">
+    </div>
+    <button class="btn btn-danger mb-3 w-100">Remove all</button>
+    <div class="list">
+      <div class="card p-2 flex-row justify-content-between align-items-center mb-3">
+        <span>Học bài</span>
+        <button class="btn btn-small btn-danger">Remove</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
