@@ -6,12 +6,13 @@ document.querySelector('form').addEventListener('submit', event => {
     id: new Date().toISOString(),
     name
   }
-  addItem(item)
+  addItemToLS(item)
+  addItemToUI(item)
   document.getElementById('name').value = ''
 })
 
 // Add new item
-const addItem = (item) => {
+const addItemToUI = (item) => {
   const card = document.createElement('div')
   card.className = 'card p-2 flex-row justify-content-between align-items-center mb-3'
   card.innerHTML = `
@@ -19,6 +20,9 @@ const addItem = (item) => {
     <button class="btn btn-sm btn-danger" data-id=${item.id}>Remove</button>
   `
   document.querySelector('.list').appendChild(card)
+}
+
+const addItemToLS = (item) => {
   // Khi add thành công trên UI thì đồng thời thêm vào storage
   const list = getList()
   list.push(item)
@@ -27,3 +31,13 @@ const addItem = (item) => {
 
 // Get List from local storage
 const getList = () => JSON.parse(localStorage.getItem('list')) || []
+
+// Sự kiện render item (lưu item) hiện tại mỗi lần load lại trang
+const init = () => {
+  const list = getList()
+  list.forEach(item => {
+    addItemToUI(item)
+  })
+}
+
+init()
