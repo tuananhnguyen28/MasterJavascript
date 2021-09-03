@@ -17,7 +17,7 @@ const addItemToUI = (item) => {
   card.className = 'card p-2 flex-row justify-content-between align-items-center mb-3'
   card.innerHTML = `
     <span>${item.name}</span>
-    <button class="btn btn-sm btn-danger" data-id=${item.id}>Remove</button>
+    <button class="btn btn-sm btn-danger btn-remove" data-id=${item.id}>Remove</button>
   `
   document.querySelector('.list').appendChild(card)
 }
@@ -28,6 +28,45 @@ const addItemToLS = (item) => {
   list.push(item)
   localStorage.setItem('list', JSON.stringify(list))
 }
+
+// Remove item from local storage
+const removeItemFromLS = id => {
+  const list = getList()
+  const index = list.findIndex(item => item.id === id)
+  list.splice(index, 1)
+  // save into local storage
+  localStorage.setItem('list', JSON.stringify(list))
+}
+
+// Lưu ý: thẻ html ảo không lắng nghe sự kiện vì xuất hiện sau khi script được chạy
+
+// Listen remove
+document.querySelector('.list').addEventListener('click', event => {
+  if(event.target.classList.contains('btn-remove')) {
+    const name = event.target.previousElementSibling.textContent
+    const isConfirmed = confirm(`Bạn có muốn xóa item '${name}'?`)
+    if(isConfirmed) {
+      const card = event.target.parentElement
+      const id = event.target.dataset.id
+      // Remove from UI
+      card.remove()
+      // Remove from LS
+      removeItemFromLS(id)
+    }
+  }
+})
+
+// Remove all
+document.getElementById('btn-remove-all').addEventListener
+('click', () => {
+  const isConfirmed = confirm('Bạn có muốn xóa tất cả item?')
+  if(isConfirmed) {
+    // Xóa item trong list
+    document.querySelector('.list').innerHTML = ''
+    // Xóa item trong local storage
+    localStorage.removeItem('list')
+  }
+})
 
 // Get List from local storage
 const getList = () => JSON.parse(localStorage.getItem('list')) || []
