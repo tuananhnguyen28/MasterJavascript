@@ -4,7 +4,7 @@ document.querySelector('form').addEventListener('submit', event => {
   const name = document.getElementById('name').value
   const item = {
     id: new Date().toISOString(),
-    name
+    name: name.trim()
   }
   addItemToLS(item)
   addItemToUI(item)
@@ -80,3 +80,18 @@ const init = () => {
 }
 
 init()
+
+// Filter
+document.getElementById('filter').addEventListener('keyup', event => {
+  const value = event.target.value.trim()
+  const list = getList()
+  const filteredList = list.filter(item => {
+    return item.name.toLowerCase().includes(value.toLowerCase())
+  })
+  // Xóa tất cả item hiện tại trên UI
+  document.querySelector('.list').innerHTML = ''
+  filteredList.forEach(item => {
+    // Chỉ hiển thị kết item được filter
+    addItemToUI(item)
+  })
+})
