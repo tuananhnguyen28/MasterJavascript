@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regex Shorthand character classes</title>
+</head>
+<body>
+  <script>
+
+    // Khớp 1 chữ cái, số hoặc...
+    const regex1 = /Tuan\w/
+    const testString1 = 'TuanA'  // only math with (number, character and '_' symbol)
+    console.log('\\w ', regex1.test(testString1))
+
+    // Khớp 1 hoặc nhiều chữ cái, số hoặc...
+    const regex2 = /Tuan\w+/
+    const testString2 = 'TuanA1_'
+    console.log('\\w+ ', regex2.test(testString2))
+
+    // Khớp với không phải chữ cái, số
+    const regex3 = /Tuan\W/
+    const testString3 = 'Tuan?'
+    console.log('\\W ', regex3.test(testString3))
+
+    // Dùng ký tự | để check Regex 'hoặc'
+    const regex4 = /Tuan(Nguyen|Anh)/
+    const testString4 = 'TuanNguyen'  // or: 'TuanAnh'
+    console.log('Tuan(Nguyen|Anh) ', regex4.test(testString4))
+
+    // Khớp 1 số
+    const regex5 = /\d/
+    const testString5 = '123'
+    console.log('\\d ', regex5.test(testString5))
+
+    // Khớp 1 hoặc nhiều số
+    const regex6 = /\d+/
+    const testString6 = '110 123 57'
+    console.log('\\d+ ', regex6.test(testString6))
+
+    // Khớp không phải là số
+    const regex7 = /\D/
+    const testString7 = 'aHbd'
+    console.log('\\D ', regex7.test(testString7))
+
+    // Khớp với dấu cách
+    const regex8 = /Nguyen\sAnh/
+    const testString8 = 'Nguyen Anh'
+    console.log('\\s ', regex8.test(testString8))
+
+    // Khớp không phải dấu cách
+    const regex9 = /Nguyen\SAnh/
+    const testString9 = 'Nguyen+Anh'
+    console.log('\\S ', regex9.test(testString9))
+
+    // Khớp nếu b ngay sao a
+    const regex10 = /Tuan(?=z)/
+    const testString10_1 = 'Tuanz Nguyen Anh'
+    const testString10_2 = 'Tuanw Nguyen Anh'
+    console.log('Tuan(?=z)(true) ', regex10.test(testString10_1))   // true
+    console.log('Tuan(?=z)(false) ', regex10.test(testString10_2))  // false
+
+    // Khớp nếu không phải b ngay sao a
+    const regex11 = /Tuan(?!v)/
+    const testString11_1 = 'TuanC'
+    const testString11_2 = 'Tuanv'
+    console.log('Tuan(?!v)(true) ', regex11.test(testString11_1))
+    console.log('Tuan(?!v)(false) ', regex11.test(testString11_2))
+
+    /* 
+      Khớp nếu chuỗi cho trước có ký tự biên
+        Ký tự biên là ký tự nằm giữa ký tự từ và không phải ký tự từ (như !@#$_+-)
+        Hoặc nằm giữa 2 ký tự không phải là ký tự từ
+    */
+    const regex12 = /tuan\b/i
+    const testString12_1 = 'ztuan nguyen anh'
+    const testString12_2 = '_tuan?nguyen anh'
+    const testString12_3 = 'ZtuanY'
+    console.log('/tuan\\b/i ztuan nguyen anh ', regex12.test(testString12_1))
+    console.log('/tuan\\b/i _tuan?nguyen anh ', regex12.test(testString12_2))
+    console.log('/tuan\\b/i ZtuanY ', regex12.test(testString12_3))
+
+  </script>
+</body>
+</html>
