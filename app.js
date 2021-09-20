@@ -10,3 +10,41 @@ const theNameNeedToCheck_3 = '1goodfornewsHW'
 console.log(nameRegex.test(theNameNeedToCheck_1)) // true
 console.log(nameRegex.test(theNameNeedToCheck_2)) // false
 console.log(nameRegex.test(theNameNeedToCheck_3)) // false
+
+// 3. Định nghĩa một số hàm check
+const isRequired = value => value.trim() !== '' ? '' : 'Trường này thì bắt buộc'
+const isEmail = value => emailRegex.test(value) ? '' : 'Email không đúng định dạng'
+const isHomanName = value => nameRegex.test(value) ? '' : 'Tên không đúng định dạng'
+// Currying (High Order Function)
+const min = num => value => value >= num ? '' : `Độ dài tối thiểu là ${num}`
+const max = num => value => value <= num ? '' : `Độ dài tối đa là ${num}`
+const isValid = (value, funcs) => {
+  for(const func of funcs) {
+    const message = func(value)
+    if(message) { return message }
+  }
+  return ''
+}
+
+// 4. Lắng nghe sự kiện submit form
+document.querySelector('form').addEventListener('submit', event => {
+  event.preventDefault()
+  const emailNode = document.getElementById('email')
+  const nameNode = document.getElementById('name')
+  const genderNode = document.getElementById('gender')
+  const nationNode = document.querySelector('input[name="nation"]:checked')
+  const passwordNode = document.getElementById('password')
+  const confirmedPasswordNode = document.getElementById('confirmedPassword')
+  const agreeNode = document.querySelector('input#agree:checked')
+
+  const isValidForm = [
+    isValid(emailNode.value, [isRequired, isEmail]),
+    isValid(nameNode.value, [isRequired, isHomanName, max(50)]),
+    isValid(genderNode.value, [isRequired]),
+    isValid(nationNode ? nationNode.value : '', [isRequired]),
+    isValid(passwordNode.value, [isRequired, min(8), max(20)]),
+    isValid(confirmedPasswordNode.value, [isRequired, min(8), max(20)]),
+    isValid(agreeNode ? agreeNode.value : '', [isRequired]),
+  ]
+  console.log(isValidForm)
+})
