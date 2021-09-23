@@ -16,11 +16,24 @@ const isRequired = value => value.trim() !== '' ? '' : 'Trường này thì bắ
 const isEmail = value => REGEX_EMAIL.test(value) ? '' : 'Email không đúng định dạng'
 const isHomanName = value => REGEX_NAME.test(value) ? '' : 'Tên không đúng định dạng'
 // Currying (High Order Function)
-const min = num => value => value >= num ? '' : `Độ dài tối thiểu là ${num}`
-const max = num => value => value <= num ? '' : `Độ dài tối đa là ${num}`
+const min = num => value => value.length >= num ? '' : `Độ dài tối thiểu là ${num}`
+const max = num => value => value.length <= num ? '' : `Độ dài tối đa là ${num}`
+
+// Compare the password and confirm-Password
+const isSame = (name1, name2) => (value1, value2) => value1 === value2 ? '' : `${name1} không giống ${name2}.` 
+
 const isValid = (value, funcs) => {
   for(const func of funcs) {
     const message = func(value)
+    if(message) { return message }
+  }
+  return ''
+}
+
+// compare password function
+const compare = (value1, value2, funcs) => {
+  for(const func of funcs) {
+    const message = func(value1, value2)
     if(message) { return message }
   }
   return ''
@@ -44,6 +57,7 @@ document.querySelector('form').addEventListener('submit', event => {
     isValid(nationNode ? nationNode.value : '', [isRequired]),
     isValid(passwordNode.value, [isRequired, min(8), max(20)]),
     isValid(confirmedPasswordNode.value, [isRequired, min(8), max(20)]),
+    compare(passwordNode.value, confirmedPasswordNode.value, [isSame('Nhập lại mật khẩu', 'Mật khẩu')]),
     isValid(agreeNode ? agreeNode.value : '', [isRequired]),
   ]
   console.log(errorForm)
