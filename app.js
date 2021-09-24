@@ -22,26 +22,56 @@ const max = num => value => value.length <= num ? '' : `Độ dài tối đa là
 // Compare the password and confirm-Password
 const isSame = (name1, name2) => (value1, value2) => value1 === value2 ? '' : `${name1} không giống ${name2}.` 
 
-const isValid = (value, funcs) => {
+const createMessage = (parentNode, controlNodes, message) => {
+  let invalidDiv = document.createElement('div')
+  invalidDiv.className = 'invalid-feedback'
+  invalidDiv.textContent = message
+  parentNode.appendChild(invalidDiv)
+  controlNodes.forEach((item) => {
+    item.classList.add('is-invalid')
+  })
+}
+
+const isValid = (param) => {
+  const { value, funcs, parentNode, controlNodes } = param
   for(const func of funcs) {
     const message = func(value)
-    if(message) { return message }
+    if(message) {
+      createMessage(parentNode, controlNodes, message) 
+      return message 
+    }
   }
   return ''
 }
 
 // compare password function
-const compare = (value1, value2, funcs) => {
+const compare = (param) => {
+  // destructuring
+  const { value1, value2, funcs, parentNode, controlNodes } = param
   for(const func of funcs) {
     const message = func(value1, value2)
-    if(message) { return message }
+    if(message) {
+      createMessage(parentNode, controlNodes, message) 
+      return message 
+    }
   }
   return ''
+}
+
+// Clear các validate message trước đó khi load lại trang
+const clearMessage = () => {
+  document.querySelectorAll('.is-invalid').forEach(item => {
+    item.classList.remove('is-invalid')
+  }),
+  document.querySelectorAll('.invalid-feedback').forEach(item => {
+    item.remove()
+  })
 }
 
 // 4. Lắng nghe sự kiện submit form
 document.querySelector('form').addEventListener('submit', event => {
   event.preventDefault()
+  clearMessage()
   const emailNode = document.getElementById('email')
   const nameNode = document.getElementById('name')
   const genderNode = document.getElementById('gender')
@@ -51,14 +81,57 @@ document.querySelector('form').addEventListener('submit', event => {
   const agreeNode = document.querySelector('input#agree:checked')
 
   const errorForm = [
-    isValid(emailNode.value, [isRequired, isEmail]),
-    isValid(nameNode.value, [isRequired, isHomanName]),
-    isValid(genderNode.value, [isRequired]),
-    isValid(nationNode ? nationNode.value : '', [isRequired]),
-    isValid(passwordNode.value, [isRequired, min(8), max(20)]),
-    isValid(confirmedPasswordNode.value, [isRequired, min(8), max(20)]),
-    compare(passwordNode.value, confirmedPasswordNode.value, [isSame('Nhập lại mật khẩu', 'Mật khẩu')]),
-    isValid(agreeNode ? agreeNode.value : '', [isRequired]),
+    isValid({
+      value: emailNode.value,
+      funcs: [isRequired, isEmail],
+      parentNode: emailNode.parentElement,
+      controlNodes: [emailNode]
+    }),
+    isValid({
+      value: nameNode.value,
+      funcs: [isRequired, isHomanName, max(50)],
+      parentNode: nameNode.parentElement,
+      controlNodes: [nameNode]
+    }),
+    isValid({
+      value: genderNode.value,
+      funcs: [isRequired],
+      parentNode: genderNode.parentElement,
+      controlNodes: [genderNode]
+    }),
+    isValid({
+      value: nationNode ? nationNode.value : '',
+      funcs: [isRequired],
+      parentNode: document.querySelector('.form-check-nation:last-child'),
+      controlNodes: document.querySelectorAll('input[name="nation"]')
+    }),
+    isValid({
+      value: passwordNode.value,
+      funcs: [isRequired, min(8), max(20)],
+      parentNode: passwordNode.parentElement,
+      controlNodes: [passwordNode]
+    }),
+    isValid({
+      value: confirmedPasswordNode.value,
+      funcs: [isRequired, min(8), max(20)],
+      parentNode: confirmedPasswordNode.parentElement,
+      controlNodes: [confirmedPasswordNode]
+    }),
+    compare({
+      value1: confirmedPasswordNode.value,
+      value2: passwordNode.value,
+      funcs: [isSame('Nhập lại mật khẩu', 'Mật khẩu')],
+      parentNode: confirmedPasswordNode.parentElement,
+      controlNodes: [confirmedPasswordNode]
+    }),
+    isValid({
+      value: agreeNode ? agreeNode.value : '',
+      funcs: [isRequired],
+      parentNode: document.getElementById('agree').parentElement,
+      controlNodes: [document.getElementById('agree')]
+    })
   ]
-  console.log(errorForm)
+  // Nếu không còn bất cứ validate message nào thì thông báo bằng 1 alert
+  const isValidForm = errorForm.every((item) => !item)
+  if(isValidForm) { alert('Form is valid') }
 })
