@@ -40,3 +40,49 @@ Object.defineProperty(user, 'name', {
 })
 user.name = 'Peter' // Không thể assign giá trị cho name
 console.log(user.name)
+
+/*
+  Non-enumerable - không thể liệt kê
+*/
+const user2 = {
+  name: 'John',
+  toString() {
+    return this.name
+  }
+}
+Object.defineProperty(user2, 'toString', {
+  enumerable: false
+})
+console.log(user2)
+// Khi không muốn một thuộc tính nào xuất hiện trong vòng lặp, ta set enumerable = false 
+for(const key in user2) {
+  console.log(key)  // name, no toString
+}
+// Ngoài ra, ta có thể dùng 'Object.keys(obj)' để lấy các tên key (dưới dạng 1 mảng)
+console.log(Object.keys(user2))
+
+/*
+  Non-configurable - không thể cấu hình
+  Ý tưởng: ngăn chặn thay đổi cờ thuộc tính và xoá thuộc tính
+*/
+let descriptor_non_configurable = Object.getOwnPropertyDescriptor(Math, 'PI')
+console.log(descriptor_non_configurable)
+// configurable: false -> vẫn có thể thay đổi giá trị của thuộc tính
+const user_non_configurable_1 = {
+  name: 'Maris'
+}
+Object.defineProperty(user_non_configurable_1, 'name', {
+  configurable: false
+})
+user_non_configurable_1.name = 'Maris2'
+console.log('user_non_configurable_1: ', user_non_configurable_1)
+// configurable: false và enumerable: false -> niêm phong thuộc tính và không thay đổi giá trị
+const user_non_configurable_2 = {
+  name: 'Louisdz'
+}
+Object.defineProperty(user_non_configurable_2, 'name', {
+  writable: false,
+  configurable: false
+})
+user_non_configurable_2.name = 'Louisdz2'
+console.log('user_non_configurable_2: ', user_non_configurable_2) // vẫn giá trị là Louisdz
