@@ -86,3 +86,70 @@ Object.defineProperty(user_non_configurable_2, 'name', {
 })
 user_non_configurable_2.name = 'Louisdz2'
 console.log('user_non_configurable_2: ', user_non_configurable_2) // vẫn giá trị là Louisdz
+
+
+/*
+  Object.defineProperties: cho phép định nghĩa nhiều thuộc tính cùng một lúc
+  Template: Object.defineProperties(obj, {
+        prop1: descriptor1,
+        prop2: descriptor2
+      })
+*/
+
+/*
+  Object.getOwnPropertyDescriptors: để lấy tất cả các property descriptor cùng một lần
+  Kết hợp với Object.defineProperties có thể được sử dụng như một cách để clone 1 project
+  Template: let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj))
+*/
+let user_defineProperties = {
+  name: 'Toimer'
+}
+Object.defineProperty(user_defineProperties, 'name', {
+  writable: false
+})
+const user_defineProperties2 = {...user_defineProperties}
+console.log(Object.getOwnPropertyDescriptors(user_defineProperties2, 'name')) // writable: true
+// writable vẫn mang giá trị true ở ví dụ trên, vì nó không thể clone flag trước đó
+// Cách fix để clone được flag trước đó
+const user_defineProperties_Fixed = Object.defineProperties({}, Object.getOwnPropertyDescriptors(user_defineProperties))
+console.log('Clone the previous flag - Object.getOwnPropertyDescriptors:', user_defineProperties_Fixed)
+console.log(Object.getOwnPropertyDescriptor(user_defineProperties_Fixed, 'name')) // writable: false
+
+
+/*
+  Sealing an object globally - Niêm phong toàn bộ một object
+*/
+
+// Object.preventExtensions(obj) - Ngăn không cho thêm mới thuộc tính vào object
+let user_sealing1 = {
+  name: 'Hojeis'
+}
+Object.preventExtensions(user_sealing1)
+user.age = 10
+console.log('user_sealing1:', user_sealing1)
+
+// Object.isExtensible(obj) - dùng để check lại thuộc tính có bị ngăn thêm vào hay không
+console.log('isExtensible:', Object.isExtensible(user_sealing1)) // return false vì thêm thuộc tính bị cấm
+// Object.seal(obj) - Ngăn chặn thêm/xóa các thuộc tính nhưng vẫn có thể thay đổi thuộc tính
+let user_sealing2 = {
+  age: 12,
+  gender: 'female'
+}
+Object.seal(user_sealing2)
+user_sealing2.age = 15
+delete user_sealing2.age
+console.log('user_sealing2:', user_sealing2)
+
+// Object.isSealed(obj) - Kiểm tra xem các thuộc tính có bị cấm thêm/xóa hay không
+console.log('isSealed:', Object.isSealed(user_sealing2))  // return true vì thêm/xóa thuộc tính bị cấm
+
+// Object.freeze(obj) - thêm/xóa/sửa thuộc tính bị cấm
+let user_sealing3 = {
+  class: 'ABC'
+}
+Object.freeze(user_sealing3)
+user_sealing3.class = 'ABCUpdated'
+console.log('user_sealing3:', user_sealing3)
+
+// Object.isFrozen(obj) - Kiểm tra thêm/xóa/sửa thuộc tính có bị cấm hay không
+console.log('isFrozen:', Object.isFrozen(user_sealing3))  // eturn true vì thêm/xóa/sửa thuộc tính bị cấm
