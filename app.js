@@ -44,3 +44,32 @@ console.log(longEar.jumps)  // true (từ rabbit)
     __proto__ không phải là thuộc tính [[Prototype]], nó chỉ là getter/setter của [[Prototype]]
     Từ ECMAScript 2015 trở về trước, nên dùng Object.getPrototypeOf/Object.setPrototypeOf
 */
+
+
+// Giá trị của 'this'
+let user = {
+  name: 'John',
+  surname: 'Smith',
+  get fullName() {
+    return `${this.name} ${this.surname}`
+  },
+  set fullName(value) {
+    ;[this.name, this.surname] = value.split(' ')
+  }
+}
+let admin = {
+  __proto__: user,
+  isAdmin: true
+}
+console.log('admin', admin)
+admin.fullName = 'Alice Cooper'
+console.log('admin.fullName:', admin.fullName)
+console.log('user.fullName:', user.fullName)
+
+/*
+  Chú thích ở ví dụ trên
+  - admin.fullName chạy vào getter fullName của admin, do ko có name/surname nên chạy vào prototype
+  của admin là user
+  - Không quan trọng phương thức ở đâu: trong object hay prototype của nó.
+  Trong phương thức được gọi, this luôn đại diện cho object trước dấu chấm
+*/
