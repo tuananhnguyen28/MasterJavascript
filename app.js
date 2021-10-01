@@ -73,3 +73,52 @@ console.log('user.fullName:', user.fullName)
   - Không quan trọng phương thức ở đâu: trong object hay prototype của nó.
   Trong phương thức được gọi, this luôn đại diện cho object trước dấu chấm
 */
+
+
+// for.. in loop: cũng lặp các thuộc tính kế thừa
+let animal_3 = {
+  eats: true
+}
+let rabbit_3 = {
+  jumps: true,
+  __proto__: animal
+}
+console.log('animal:', animal_3)
+// Không lấy được các g/trị bên trong __proto bởi vì thuộc tính enumerable đã mặc định là false
+
+// Object.keys chỉ return các key
+console.log('Object.keys(rabbit_3):', Object.keys(rabbit_3))
+
+// for..in luôn cả key và key kế thừa
+for(const key in rabbit_3) { console.log('for..in', key) }
+
+
+// Nếu muốn bỏ các thuộc tính kế thừa thì có thể dùng phương thức có sẵn là obj.hasOwnProperty(key)
+// -> nó return true nếu key đó thuộc object (không phải từ kế thừa)
+let animal_4 = {
+  eats: true
+}
+let rabbit_4 = {
+  jumps: true,
+  __proto__: animal_4
+}
+console.log('obj.hasOwnProperty(key)')
+for(const prop in rabbit_4) {
+  let isOwn = rabbit_4.hasOwnProperty(prop)
+  if(isOwn) {
+    console.log(`Our: ${prop}`) // Our: jumps
+  } else {
+    console.log(`Inherited: ${prop}`) // Inherited: eats
+  }
+}
+
+
+/* Lưu ý khác:
+  - prototype chain như sau: rabbit kế thừa từ animal, animal kế thừa từ Object.prototype
+  (bởi animal là một literal object {...}, vì thể nó là mặc định)
+  Cuối cùng Object.prototype kế thừa từ null
+  - hasOwnProperty không xuất hiện trong for...in như eats và jumps vì nó không được liệt kê
+  Tất cả thuộc tính Object.prototype thì được set cờ là enumerable:false
+  - Hầu hết các phương thức get/set value sẽ bỏ qua thuộc tính kế thừa, vd: Object.keys, Object.values
+  Tham khảo: https://javascript.info/prototype-inheritance
+*/
