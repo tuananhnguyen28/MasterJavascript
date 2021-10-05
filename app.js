@@ -52,3 +52,47 @@ console.log(rabbit_1)
 const rabbit_2 = new Rabbit_2('Black Rabbit 2') // object được tạo sau mới có [[Prototype]] mới
 console.log(rabbit_2)
 console.log('------------------------')
+
+
+// F.Prototype mặc định, thuộc tính constructor
+// Một object chỉ có thuộc tính duy nhất là constructor trỏ ngược lại chính function đó
+function Rabbit_3() {
+
+}
+let rabbit_3 = new Rabbit_3()
+console.log('-----------Default Prototype-----------')
+console.log('Rabbit_3.prototype:', Rabbit_3.prototype)
+console.log('Rabbit_3.prototype.constructor === Rabbit_3:', Rabbit_3.prototype.constructor === Rabbit_3)
+console.log('rabbit_3.constructor === Rabbit_3:', rabbit_3.constructor === Rabbit_3)
+
+
+// Chúng ta có thể sử dụng thuộc tính 'constructor' để tạo một object mới dựa trên object đã tồn tại
+function Photo(color) {
+  this.color = color
+}
+let photo = new Photo('green')
+let photo_2 = new photo.constructor('blue')
+console.log('Photo:', photo_2)
+
+
+// Điều quan trọng về constructor là Javascript không đảm bảo constructor mà bạn cần
+// Nếu thay thế constructor mặc định của function thì sẽ không còn constructor nữa
+function Cat(name) {
+  this.name = name
+}
+Cat.prototype = {
+  eats: true
+}
+let cat = new Cat('White Cat')
+console.log('------------Replace default constructor------------')
+console.log(cat)
+
+
+// Vậy nên để giữ đúng constructor, chúng ta có thể thêm hoặc xóa các thuộc tính thông qua thuộc tính prototype
+function Dog(name) {
+  this.name = name
+}
+Dog.prototype.eats = true // Không ghi đè lên Dog.prototype, chỉ thêm vào
+let dog = new Dog('The black dog')
+console.log('--------------Keep the constructor right--------------')
+console.log('Dog:', dog)
