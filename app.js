@@ -35,5 +35,39 @@ console.log('arr.__proto__.__proto__ === Object.prototype:', arr.__proto__.__pro
 // Ví dụ: Array.prototype có toString(), nhưng Object.prototype cũng có toString
 // Trong trường hợp này, nó sẽ chọn cái gần hơn
 let arr_2 = [4, 5, 6]
-let newArr_2 = new Array(4, 5, 6)
 console.log(arr_2.toString()) // Kết quả của Array.prototype.toString()
+
+
+/*
+    3. Primitives - kiểu nguyên thuỷ
+    -   
+    -   string, number, boolean là kiểu nguyên thuỷ, không phải object và không bị tham chiếu,
+    còn về bản chất, chúng là object
+    -   null và undefined không có các wrapper object, chúng chỉ là giá trị đặc biệt vì thế không có thuộc
+    tính hay prototype
+*/
+let a = 1
+console.log('--------Primitives--------')
+console.log('a:', a.toString())
+;(2).toString()
+console.log('Number(2):', Number(2).toString())    // tạo bằng object wrapper
+
+
+// Thay đổi prototype sơ khai (không nên dùng vì các prototype dễ đè lên nhau vì là toàn cục)
+// Ngoài ra có thể dùng phương pháp polyfilling (mà JS engine hiện tại không hỗ trợ)
+
+
+/*
+    4. Mượn từ prototype
+        -   Exp: object obj không có phương thức join, ta có thể mượn từ Array.prototype.join
+        -> join hoạt động được trong object vì thuật toán bên trong phương thức join chỉ quan tâm 
+        đến các index
+*/
+let obj = {
+    0: 'Hello',
+    1: 'World',
+    length: 2
+}
+obj.join = Array.prototype.join
+console.log('-----Borrow from prototype-----')
+console.log(obj.join('-'))
