@@ -57,3 +57,35 @@ let clone = Object.create(
 )
 console.log('----------Clone new object by using Object.create----------')
 console.log('Clone originalObj object:', clone)
+
+
+/*
+  Tóm tắt lịch sử: tham khảo trong clip
+*/
+
+
+/*
+  Nguyên nhân:
+    __proto__: là thuộc tính đặc biệt, chỉ nên là 1 object hoặc null, không thể là 1 string
+    Không nên gán value cho object, vì prototype có thể bị thay đổi
+*/
+// let obj = {}
+// let key = prompt("Nhập key", '__proto__')
+// obj[key] = 'Giá trị nào đó'
+// console.log(obj[key])
+// console.log(obj)
+
+
+// Cách khắc phục vấn đề trên: dùng Very plain object/Base object hoặc dùng thông qua Map object
+// Do object này không tồn tại __proto__ -> có thể set value cho __proto__
+let obj2 = Object.create(null)
+console.log('obj2:', obj2)
+let obj3 = Object.create(null)
+let key = prompt('Nhập key', '__proto__')
+obj3[key] = 'Giá trị obj3 nào đó'
+console.log(obj3[key]);
+
+
+// Nhược điểm của các object như trên là thiếu các phương thức có sẵn, ví dụ toString
+// Để ý rằng, hầu hết các phương thức object liên quan kiểu Object.Something(...) như Object.keys(obj)
+// chúng thuộc về Object lớn hơn, nên vẫn hoạt động bình thường
