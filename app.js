@@ -68,3 +68,31 @@ class House_Error {
 // House_Error() // Error
 
 
+// Class Expression
+let ClassExpression = class {
+  sayHi() {
+    console.log('Hello and say hi for class expression.')
+  }
+}
+new ClassExpression().sayHi()
+
+// Nếu một class expression có một tên, nó chỉ hiện bên trong class, không thể sử dụng bên ngoài class
+let ClassExpression2 = class MyClassExpression2 {
+  sayHi() {
+    console.log(MyClassExpression2) 
+  }
+}
+// Nhưng có thể sử dụng bằng cách dùng new
+new ClassExpression2().sayHi()
+
+// Cách tạo một class khác thông qua 1 function và return về 1 class
+function Motobike_Function() {
+  return class {
+    sayHi() {
+      console.log('This is a class from a function')
+    }
+  }
+}
+let Motobike_Class = Motobike_Function() // Cũng là Class Expression
+new Motobike_Class().sayHi()
+console.log(Motobike_Class)
