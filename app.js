@@ -96,3 +96,50 @@ function Motobike_Function() {
 let Motobike_Class = Motobike_Function() // Cũng là Class Expression
 new Motobike_Class().sayHi()
 console.log(Motobike_Class)
+
+
+// Getter/Setter
+class Bird {
+  constructor(name) {
+    // when creating new object of class and then will run constructor and invoke the setter
+    this.name = name
+  }
+  get name() {
+    return this._name
+  }
+  set name(value) {
+    if(value.length < 4) {
+      console.log('The name is too short!')
+      return
+    }
+    this._name = value
+  }
+}
+let bird1 = new Bird('Tuan')
+console.log('-----Getter/Setter-----')
+console.log(bird1.name)  // Tuan
+let bird2 = new Bird('')
+console.log(bird2.name)
+
+
+/* Class fields - các trường trong class
+    Trước đó thì các class chỉ có các phương thức, class fields cho phép thêm bất kỳ thuộc tính
+    Đối tượng có class field giống như tạo trong constructor function
+*/
+class Computer {
+  nameComputer = 'Lenovo'
+  constructor() {
+    this.brand = 'Thinkpad'
+    this.color = 'black'
+  }
+  startSystem() { // được xét trong Prototype/Computer.Prototype
+    console.log(`The computer ${this.nameComputer} is starting Windows 11.`)
+  }
+}
+const computer = new Computer()
+console.log('-----Class fields-----')
+console.log(computer)
+computer.startSystem()
+
+// // Các class field chỉ được set trên cá nhân của object, không phải User.prototype
+// console.log(computer.prototype.nameComputer)  // undefined
