@@ -143,3 +143,67 @@ computer.startSystem()
 
 // // Các class field chỉ được set trên cá nhân của object, không phải User.prototype
 // console.log(computer.prototype.nameComputer)  // undefined
+
+
+/*
+  Cảnh giác với this trong class
+  -> this phụ thuộc vào ngữ cảnh được gọi
+  Vấn đề: bị mất 'this'
+  -> Cách khắc phục (có 2 cách)
+    (1): Truyền vào 1 wrapper function, như là setTimeout(() => button.click(), 1000)
+    (2): Bind một phương thức vào object, vd trong constructor
+    (3): Đây là cách hữu hiệu nhất, dùng Class field được tạo trên mỗi object.
+        Bởi vì nó là một function riêng biệt trên mỗi Button object với this bên trong tham chiếu
+        đến object đó. Chúng ra có thể truyền button.click ở bất kỳ đâu mà không lo lắng về this.
+*/
+// Original Exp
+class Button {
+  constructor(value) {
+    this.value = value
+  }
+  click() {
+    console.log(this.value)
+  }
+}
+console.log('--------Waring with this in class--------')
+let button = new Button('Hello the button.')
+setTimeout(button.click, 1000)  // undefined
+// (1)
+class Button_Fix1 {
+  constructor(value) {
+    this.value = value
+  }
+  click() {
+    console.log('this.value in Button_Fix1 class:', this.value)
+  }
+}
+let buttonFix1 = new Button_Fix1('Hello button fix 1.')
+setTimeout(buttonFix1.click(), 3000)  // this.value in Button_Fix1 class: Hello button fix 1.
+// (2)
+class Button_Fix2 {
+  constructor(value) {
+    this.value = value
+    this.click = this.click.bind(this)
+  }
+  click() {
+    console.log('this.value in Button_Fix2 class:', this.value)
+  }
+}
+let buttonFix2 = new Button_Fix2('Hello button fix 2.')
+setTimeout(buttonFix2.click, 5000)
+// (3)
+class Button_Fix3 {
+  constructor(value) {
+    this.value = value
+  }
+  click = () => {
+    console.log('this.value in Button_Fix3 class:', this.value)
+  }
+}
+let buttonFix3 = new Button_Fix3('Hello button fix 3.')
+setTimeout(buttonFix3.click, 7000)
+
+/*
+  Về mặt kỹ thuật, MyClass là một function (hàm mà chúng ta cung cấp dưới dạng constructor function),
+  trong khi các ph/thức, getter/setter được viết ở MyClass.prototype
+*/
