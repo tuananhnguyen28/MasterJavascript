@@ -69,3 +69,51 @@ new User_2().sayBye()
 class User_3 extends makeClass(0) {}
 console.log('-----Return class contains sayBye if the condition equal 0-----')
 new User_3().sayHi()
+
+
+/* 3. Ghi đè một phương thức
+    - Mục đích không muốn thay thế phương thức của class cha
+    - Dùng từ khóa super.method() để gọi phương thức cha
+    - super(...) để gọi một constructor cha (bên trong constructor của chúng ta)
+*/
+class Person {
+  constructor(name) {
+    this.score = 0
+    this.name = name
+  }
+  learn(score) {
+    this.score = score
+    console.log(`${this.name} reach ${this.score} score.`)
+  }
+  failure() {
+    this.score = 0
+    console.log(`${this.name} is failure.`)
+  }
+}
+class Student extends Person {
+  write() {
+    console.log('The student is writing new lesson.')
+  }
+  failure() {
+    super.failure() // call parent learn
+    this.write()  // and then call write method
+  }
+}
+let student = new Student('Student ABC')
+console.log('----- Override one method -----')
+student.learn(9)
+student.failure()
+
+// Arrow function không có super, nếu được truy cập -> nó sẽ lấy bên ngoài function, nghĩa là gọi method của parent class
+class Teacher extends Person {
+  teach() {
+    console.log('The teacher is standing on the board.')
+  }
+  failure() {
+    setTimeout(() => {
+      super.failure()
+    }, 1000)
+  }
+}
+let teacher = new Teacher('Teacher BCD')
+teacher.failure()
