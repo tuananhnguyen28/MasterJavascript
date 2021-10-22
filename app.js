@@ -117,3 +117,53 @@ class Teacher extends Person {
 }
 let teacher = new Teacher('Teacher BCD')
 teacher.failure()
+
+
+/*
+  4. Ghi đè phương thức
+    - Class con không có constructor, kế thừa từ class cha, 
+    khi tạo 1 constructor trống, nó sẽ gọi 1 constructor và truyền các tham số vào
+    - The syntax: tạo ra từ những class mà không có constructor của nó
+    class Child extends Parent {
+      constructor(...args) {
+        super(...args)
+      }
+    }
+*/
+class Fruit {
+  constructor(color) {
+    this.taste = ''
+    this.color = color
+  }
+}
+class Orange extends Fruit {  // constructor trong class kế thừa phải gọi super(...) và làm điều này trước khi sử dụng this
+  constructor(color, taste) {
+    super(color)
+    this.taste = taste
+  }
+}
+let orange = new Orange('orange', 'sweet')
+console.log('----- Override Constructor -----')
+console.log(orange.color)
+console.log(orange.taste)
+
+
+/*
+  Ghi đè các class field
+    - Constructor cha luôn sử dụng giá trị (field) của nó, không phải từ kế thừa
+    - Khi đối tượng của class kế thừa gọi super() -> constructor cha được gọi và ngay sau đó class field được khởi tạo
+    - Tại thời điểm constructor cha thực thi, chưa có class field của class kế thừa
+    - Ngoài ra, có thể fix bằng cách sử dụng các ph/thức (method) hoặc getter/setter thay vì trường (field)
+*/
+class Fruit_2 {
+  name = 'Fruit_2'
+  constructor() {
+    this.name = this.name
+  }
+}
+class Apple extends Fruit_2 {
+  name = 'Apple'
+}
+console.log('----- Override Class Fields -----')
+console.log('Fruit_2:', new Fruit_2().name)  // Fruit_2
+console.log('Apple:', new Apple().name) // Apple
