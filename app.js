@@ -45,3 +45,21 @@ console.log(articles[0].title)  // CSS
 
 // Lưu ý: tại đây Article.compare() thực hiện so sánh các object. Nó không phải là
 // phương thức của một article, mà là của cả class
+
+
+/* 1. Thuộc tính static
+    - Tính năng được thêm gần đây trong Javascript (1)
+    - Gán trực tiếp (2)
+*/
+
+// (1)
+class Square1{
+  static publisher = 'Type Kantor 1'
+}
+console.log('-----Static Property-----')
+console.log(Square1.publisher) // Type Kantor 1'
+
+// (2)
+class Square2 {}
+Square2.publisher = 'Type Kantor 2'
+console.log(Square2.publisher)  // Type Kantor 2
