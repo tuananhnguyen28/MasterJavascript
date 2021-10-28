@@ -47,7 +47,7 @@ console.log(articles[0].title)  // CSS
 // phương thức của một article, mà là của cả class
 
 
-/* 1. Thuộc tính static
+/* 2. Thuộc tính static
     - Tính năng được thêm gần đây trong Javascript (1)
     - Gán trực tiếp (2)
 */
@@ -63,3 +63,39 @@ console.log(Square1.publisher) // Type Kantor 1'
 class Square2 {}
 Square2.publisher = 'Type Kantor 2'
 console.log(Square2.publisher)  // Type Kantor 2
+
+
+/* 3. Kế thừa thuộc tính và phương thức tĩnh
+    - Vd: Animal.compare và Animal.planet bên dưới được kế thừa và có thể truy cập
+    từ Rabbit.compare và Rabbit.planet (1)
+*/
+// (1)
+class Animal {
+  static planet = 'Earth'
+  constructor(name, speed) {
+    this.speed = speed
+    this.name = name
+  }
+  run(speed = 0) {
+    this.speed += speed
+    console.log(`${this.name} runs with speed ${this.speed}`)
+  }
+  static compare(animalA, animalB) {
+    return animalA.speed - animalB.speed
+  }
+}
+// Inherit from Animal
+class Rabbit extends Animal {
+  hid() {
+    console.log(`${this.name} hides!`)
+  }
+}
+let rabbits = [
+  new Rabbit('White Rabbit', 10),
+  new Rabbit('Black Rabbit', 5)
+]
+console.log('-----Attribute Inheritance and Static Method-----')
+rabbits.sort(Rabbit.compare)
+console.log(rabbits)
+console.log(rabbits[0].speed)
+console.log(Rabbit.planet)
