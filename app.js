@@ -99,3 +99,29 @@ rabbits.sort(Rabbit.compare)
 console.log(rabbits)
 console.log(rabbits[0].speed)
 console.log(Rabbit.planet)
+
+
+/*
+  4. Cách thức hoạt động của kế thừa thuộc tính và phương thức tĩnh
+    Sử dụng prototype, extends cho [[Prototype]] của Rabbit tham chiếu đến Animal
+    Vậy nên:
+      - Rabbit function kế thừa [[Prototype]] từ Animal function.
+      - Rabbit.prototype kế thừa [[Prototype]] từ Animal.prototype
+*/
+// Testing code
+class Animal_2 {}
+class Rabbit_2 extends Animal_2 {}
+console.log('-----------------------')
+console.log('-----How attribute inheritance and static method work-----')
+// for statics
+console.log(Rabbit_2.__proto__ === Animal_2)  // true
+// for regular methods
+console.log(Rabbit_2.prototype.__proto__ === Animal_2.prototype)  // true
+
+/*
+  Lưu ý về __proto__ prototype [[Prototype]]
+    - __proto__ là getter truy cập trực tiếp đến prototype [[Prototype]] của một object, hay nói cách
+    khác __proto__ đại diện cho [[Protoype]]
+    - prototype chỉ là tên gọi 1 thuộc tính được tồn tại sẵn có trên function, prototype cho phép
+    chúng ta thực hiện kế thừa thông qua nó (khá giống __proto__), nhưng nó không đại diện cho [[Prototype]]
+*/
