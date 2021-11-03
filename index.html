@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiểm tra class với "instanceof"</title>
+</head>
+<body>
+  <script>
+
+    // 1. Toán tử instanceof
+    class Animal {}
+    class Rabbit extends Animal {}
+
+    let rabbit = new Rabbit()
+
+    // instanceof hoạt động dựa trên prototype của object
+    console.log('----- Toán tử instanceof -----')
+    console.log(rabbit.__proto__ === Rabbit.prototype)
+    console.log(rabbit.__proto__.__proto__ === Animal.prototype)
+    console.log(rabbit instanceof Rabbit) // rabbit is a instance of Animal
+    console.log(rabbit instanceof Object)
+
+
+    // 2. Nó cũng hoạt động với constructor function
+    function Rabbit_2() {}
+    let rabbit_2 = new Rabbit_2()
+    console.log('----- Nó cũng hoạt động với constructor function -----')
+    console.log(rabbit_2 instanceof Rabbit_2)
+    console.log(Rabbit_2 instanceof Function)
+
+
+    // 3. Với các function được xây dựng sẵn
+    let arr = [1, 2, 3]
+    console.log('----- Với các function được xây dựng sẵn -----')
+    console.log(arr instanceof Array)
+    console.log(arr instanceof Object)
+    
+
+    /* Tóm tắt
+        - typeof dùng để kiểm tra kiểu dữ liệu, return string
+        - instanceof kiểm tra các objec thuộc về instance nào (thuộc về class/function nào), return true/false
+    */
+
+  </script>
+</body>
+</html>
