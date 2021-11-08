@@ -73,6 +73,7 @@ let rabbit = new Rabbit('White Rabbit')
 console.log('----- 2.The case could not create object from child/derived class -----')
 console.log(rabbit.name)
 
+
 /*
   3. Tạo một class ExtendedClock kế thừa Clock và thêm độ chính xác của tham số - 
   số mili giây giữa các lần in. Mặc định là 1000 mili giây. Lưu ý không sửa đổi class Clock.
@@ -150,3 +151,47 @@ class ExtendedClock extends Clock {
 const clock = new ExtendedClock({ template: 'h:m:s', precision: 500 })
 console.log('----- 3. Edit contents in derived class but no change parent class -----')
 clock.start()
+
+
+/*
+  4. Tất cả các đối tượng thường kế thừa từ Object.prototype và có quyền truy cập vào các
+    ph/thức đối tượng "generic" như hasOwnProperty
+    => Xem thêm giải thích trong phần 4 này (phần bài tập và lý thuyết)
+*/
+
+// Exp1:
+class Rabbit_1 {
+  constructor(name) {
+    this.name = name
+  }
+}
+console.log('----- Object prototype (Inherit) -----')
+let rabbit_1 = new Rabbit_1('Rabbit 1') // hasOwnProperty method is from Object.prototype
+console.log(rabbit_1.hasOwnProperty('name'))  // true
+
+// Exp2:
+class Rabbit_2 extends Object {
+  constructor(name) {
+    super() // need to call the parent constructor when inheriting
+    this.name = name
+  }
+}
+let rabbit_2 = new Rabbit_2('Rabbit 2')
+console.log(rabbit_2.hasOwnProperty('name'))  // true
+
+
+/*
+  5. Trong đoạn mã dưới đây, tại sao instanceof trả về true? Ta có thể dễ dàng thấy rằng a không được tạo bởi B().
+    
+  function A() {}
+  function B() {}
+  A.prototype = B.prototype = {}
+  let a = new A()
+  alert(a instanceof B) // true
+
+*/
+
+// Giải thích
+// instanceof không quan tâm đến function, cái instanceof quan tâm là thuộc tính prototype của function. 
+// Và ở đây a.__proto__ == B.prototype, vì thế instanceof return true. 
+// Vậy nên về mặt logic của instanceof, prototype mới là thứ định nghĩa type, chứ không phải constructor function
