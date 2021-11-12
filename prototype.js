@@ -197,3 +197,9 @@ console.log(speedy_2.stomach) // samsung
 
 // Lazy one's stomach is empty
 console.log(lazy_2.stomach) // <nothing>
+
+
+/*
+  Exercise 5, 6, 7, 8
+  Xem trên link Github và thực hành trên file javascript
+*/
