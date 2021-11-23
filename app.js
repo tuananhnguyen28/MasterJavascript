@@ -1,3 +1,5 @@
+/*
+
 // Prototype
 
 function Student(name, birthday) {
@@ -86,6 +88,99 @@ Store.prototype.remove = function(id) {
 
 Store.prototype.getStudent = function(id) {
   return this.getStudents().find(student => student.id === id)
+}
+
+*/
+
+// Class
+
+class Student {
+  constructor(name, birthday) {
+    this.name = name
+    this.birthday = birthday
+    this.id = new Date().toISOString()
+  }
+}
+
+class UI {
+
+  add(student) {
+    const store = new Store()
+    const students = store.getStudents()
+    const tr =  document.createElement('tr')
+    tr.innerHTML = `
+      <td>${students.length + 1}</td>
+      <td>${student.name}</td>
+      <td>${student.birthday}</td>
+      <td> 
+        <button class="btn btn-sm btn-danger btn-remove" data-id="${student.id}">Xóa</button>
+      </td>
+    `
+    document.querySelector('table tbody').appendChild(tr)
+
+    // Clear form data after adding succeed
+    document.getElementById('name').value = ''
+    document.getElementById('birthday').value = ''
+  }
+
+  renderAll() {
+    const store = new Store()
+    const students = store.getStudents()
+    let html = students.reduce((result, current, currentIndex) => {
+      return result + `
+        <tr>
+          <td>${currentIndex + 1}</td>
+          <td>${current.name}</td>
+          <td>${current.birthday}</td>
+          <td>
+            <button class="btn btn-sm btn-danger btn-remove" data-id="${current.id}">Xóa</button>
+          </td>
+        </tr>
+      `
+    }, '')
+    document.querySelector('table tbody').innerHTML = html
+  }
+
+  clear() {
+    document.querySelector('table tbody').innerHTML = ''
+  }
+
+  alert(message, type ='success') {
+    const alert = document.createElement('div')
+    alert.className = `alert alert-${type}`
+    alert.textContent = message
+    document.getElementById('notification').appendChild(alert)
+    setTimeout(() => {
+      alert.remove()
+    }, 2000)
+  }
+
+}
+
+// Hàm trả về danh sách các students
+class Store {
+
+  getStudents() {
+    return JSON.parse(localStorage.getItem('students')) || []
+  }
+
+  add(student) {
+    const students = this.getStudents()
+    students.push(student)
+    localStorage.setItem('students', JSON.stringify(students))
+  }
+
+  remove(id) {
+    const students = this.getStudents()
+    const index = students.findIndex(student => student.id === id)
+    students.splice(index, 1)
+    localStorage.setItem('students', JSON.stringify(students))
+  }
+
+  getStudent(id) {
+    return this.getStudents().find(student => student.id === id)
+  }
+
 }
 
 document.querySelector('form').addEventListener('submit', event => {
