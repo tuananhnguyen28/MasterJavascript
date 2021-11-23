@@ -33,7 +33,7 @@ UI.prototype.renderAll = function() {
   const store = new Store()
   const students = store.getStudents()
   let html = students.reduce((result, current, currentIndex) => {
-    return result = `
+    return result + `
       <tr>
         <td>${currentIndex + 1}</td>
         <td>${current.name}</td>
@@ -51,6 +51,18 @@ UI.prototype.clear = function() {
   document.querySelector('table tbody').innerHTML = ''
 }
 
+UI.prototype.alert = function(message, type ='success') {
+  const alert = document.createElement('div')
+  alert.className = `alert alert-${type}`
+  alert.textContent = message
+  document.getElementById('notification').appendChild(alert)
+  setTimeout(() => {
+    alert.remove()
+  }, 2000)
+}
+
+
+
 // Hàm trả về danh sách các students
 function Store() {}
 // Lấy sinh viên
@@ -64,6 +76,18 @@ Store.prototype.add = function (student) {
   localStorage.setItem('students', JSON.stringify(students))
 }
 
+// Remove Student (xóa trên Local Storage và render l)
+Store.prototype.remove = function(id) {
+  const students = this.getStudents()
+  const index = students.findIndex(student => student.id === id)
+  students.splice(index, 1)
+  localStorage.setItem('students', JSON.stringify(students))
+}
+
+Store.prototype.getStudent = function(id) {
+  return this.getStudents().find(student => student.id === id)
+}
+
 document.querySelector('form').addEventListener('submit', event => {
   const store = new Store()
   const ui = new UI()
@@ -73,6 +97,7 @@ document.querySelector('form').addEventListener('submit', event => {
   const student = new Student(name, birthday)
   ui.add(student)
   store.add(student)
+  ui.alert(`Bạn vừa thêm thành công ${name}`)
 })
 
 // Sau khi load hết HTML, sẽ chạy hàm này để add từng phần tử vào UI, không mất khi reload page
@@ -80,3 +105,21 @@ window.addEventListener('DOMContentLoaded', () => {
   const ui = new UI()
   ui.renderAll()
 })
+
+document.querySelector('table tbody').addEventListener('click', 
+  event => {
+    if(event.target.classList.contains('btn-remove')) {
+      const store = new Store()
+      const ui = new UI()
+      const id = event.target.dataset.id
+      const student = store.getStudent(id)
+      const isConfirmed = confirm(`Bạn có muốn xóa sinh viên ${student.name}`)
+      if(isConfirmed) {
+        store.remove(id)
+        ui.clear
+        ui.renderAll()
+        ui.alert(`Bạn vừa xóa thành công ${student.name}`)
+      }
+    }
+  }
+)
