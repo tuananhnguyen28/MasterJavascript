@@ -36,3 +36,20 @@ const c_to_p = new Promise((resolve, reject) => {
 c_to_p.then(value => { console.log(value)} )
 
 
+// Một số lưu ý khi dùng Promise
+// 1.1 Promise thực thi khi khai báo, chứ không phải là khi dùng then() -> sử dụng then() chỉ lấy kết quả
+let a = 1
+const operate_when_declaring = new Promise((resolve, reject)=> {
+  a++
+})
+console.log('Promise thực thi khi khai báo, a =', a)
+// => Cách khắc phục: đưa Promise vào một function
+let b = 1
+const fixed_operate_when_declaring = () => {
+  new Promise((resolve, reject) => {
+    b++
+  })
+}
+console.log('Promise sau khi được đưa vào 1 function, b =', b)
+fixed_operate_when_declaring()
+console.log('Kết quả sau khi muốn tăng giá trị bằng sử dụng function hoặc then(), b =', b)
