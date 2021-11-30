@@ -53,3 +53,52 @@ const fixed_operate_when_declaring = () => {
 console.log('Promise sau khi được đưa vào 1 function, b =', b)
 fixed_operate_when_declaring()
 console.log('Kết quả sau khi muốn tăng giá trị bằng sử dụng function hoặc then(), b =', b)
+
+
+// 1.2 Một Promise chỉ có thể rơi vào 1 trong 3 trạng thái, sau khi thực hiện resolve() hay reject(), nếu có code 
+// phía dưới thì code vẫn được chạy, muốn không chạy code dưới thì dùng return (kết thúc một function)
+const one_in_three = new Promise((resolve, reject) => {
+  return resolve('done for resolve.')
+  console.log('Đã chạy resolve.')
+  reject(new Error('error'))
+})
+one_in_three.then(value => {
+  console.log(value)
+}).catch(error => {
+  console.log(error)
+})
+
+// 1.3.1 then/catch luôn return về một promise
+const always_return_one_promise = new Promise((resolve, reject) => {
+  reject('Lỗi rồi đó (always_return_one_promise)!')
+})
+always_return_one_promise.then(value => {}, error => {
+  console.log(error)
+  return 1 // return về 1 promise ở dòng này
+}).then(value => {
+  console.log('value', value)
+})
+
+// 1.3.2 return giá trị trong onFulfilled / onRejected sẽ đưa giá trị đó về trạng thái onFullfilled ở promise tiếp theo
+const onFullfilled_to_onFullfilled = new Promise((resolve, reject) => {
+  resolve('Resolve lỗi rồi ')
+})
+onFullfilled_to_onFullfilled.then(value => {
+  return value + 'bạn ơi'
+}).then(value => {
+  console.log('value', value)
+})
+
+// 1.3.3 'throw' giá trị trong executor / onFullfilled / onReject sẽ đưa giá trị đó về trạng thái onRejected ở promise tiếp theo,
+// quăng lỗi vào catch
+const _throw = new Promise((resolve, reject) => {
+  throw 'Lỗi throw '
+})
+_throw.catch(error => { throw error + 'bạn throw ơi!' 
+}).catch(error => { console.log(error) })
+
+// Cách tạo nhanh promise/reject
+const fast_promise = Promise.resolve(1)
+const fast_reject = Promise.reject(2)
+console.log('fast_promise ', fast_promise)
+console.log('fast_reject ', fast_reject)
