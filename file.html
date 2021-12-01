@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise - Một số pattern cần tránh</title>
+</head>
+<body>
+  <script>
+    
+    // 1. Thực hiện code chạy tuần tự gây nên callback hell
+    const getProfile = () => Promise.resolve({ name: 'Tuan' })
+    const getArticles = () =>  Promise.resolve(['Sach van hoc', 'Tieu thuyet'])
+    // getProfile.then(profile => {
+    //   console.log(profile)
+    //   getArticles().then(articles => {
+    //     console.log(articles)
+    //   })
+    // }) // Bị dính callback hell
+
+    // How to fix
+    // Khi return về 1 promise trong onFulfilled/onRejected => .then() của promise đó
+    getProfile().then(profile => {
+      console.log(profile)
+      return getArticles()
+    }).then(articles => {
+      console.log(articles)
+    })
+
+    // 2. Khai báo dư thừa Promise
+    const getToken = () => { Promise.resolve('abcdef') }
+    // const getAPI = () => {
+    //   return new Promise((resolve, reject) => {
+    //     getToken().then(token => {
+    //       console.log(token)
+    //     }).catch(error => {
+    //       reject(error)
+    //     })
+    //   })
+    // } // Bị dư thừa Promise
+
+    // How to fix
+    const getAPI = () => {
+      return getToken() // return getToken() nghĩa là return về một Promise
+    }
+
+    getAPI.then(value => {
+      console.log(value)
+    })
+
+  </script>
+</body>
+</html>
