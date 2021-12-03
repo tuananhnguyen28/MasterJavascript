@@ -13,8 +13,6 @@ handle1().then(value => { console.log(value) })
 */
 
 /*
-
-
 // 2. Await: chỉ hoạt động bên trong sync function
 
 const getAPI = () => {
@@ -37,6 +35,7 @@ handle2().then(value => { console.log(value) })
 */
 
 
+/*
 // 3. Xử lý lôi với async/await
 const getAPI = () => {
   return new Promise((resolve, reject) => {
@@ -59,3 +58,56 @@ const getUser = async () => {
 getUser()
 // Nếu muốn lấy luôn giá trị trả về thì execute thêm .then()
 getUser().then(value => { console.log(value) })
+*/
+
+
+// 4. Đừng bao giờ kết hợp các toán tử đồng bộ với async/await
+// let x = 0
+// async function r5() {
+//   x += 1
+//   console.log(x)
+//   return 5
+// }
+// (async () => {
+//   x += await r5()  // x ở dòng này ko được tăng lên
+//   console.log(x)
+// })()
+// // 1
+// // 5
+// Cách sửa lại:
+let x = 0
+async function r5() {
+  x += 1
+  console.log(x)
+  return 5
+}
+(async () => {
+  const y = await r5()
+  x += y
+  console.log(x)
+})()
+// 1
+// 6
+
+
+// 5. Gọi tuần tự với async await: tối ưu bằng Promise.all()
+const getBooks = () => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(['Programming', 'Design'])
+    }, 2000)
+  })
+}
+const getUsers = () => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(['John', 'Mask', 'Leon'])
+    }, 3000)
+  })
+}
+const getAPI = async () => {
+  // Destructuring
+  const [books, users] = await Promise.all([getBooks(), getUsers()])
+  return { books, users }
+}
+getAPI().then(value => { console.log(value)} )
