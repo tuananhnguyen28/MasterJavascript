@@ -46,3 +46,29 @@ const jsonContainsFunction = {
 }
 const jsonContainsFunction_Result = JSON.stringify(jsonContainsFunction)
 console.log('JSON chứa function không thể chuyển sang JSON:', jsonContainsFunction_Result)
+
+
+// 2.1 AJAX (Xem thêm video clip về phần này)
+
+// 2.2 XMLHttpRequest
+// // Ví dụ về cách dùng XHR để GET
+// const xhr = new XMLHttpRequest()
+// xhr.onreadystatechange = function() {
+//   console.log(this.readyState)
+// }
+// console.log('----------------------')
+// console.log('XMLHttpRequest - GET')
+// xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/1', true)
+// xhr.send()
+
+// Ví dụ về cách dùng XHR để POST
+const xhr_post = new XMLHttpRequest()
+xhr_post.onreadystatechange = function() {
+  console.log(this.readyState)
+}
+console.log('----------------------')
+console.log('XMLHttpRequest - POST')
+xhr_post.open('POST', 'https://jsonplaceholder.typicode.com/todos', true)
+xhr_post.setRequestHeader('Content-Type', 'application/json')
+const body = { completed: true, title: 'This is test from Tuan', userId: 201}
+xhr_post.send(JSON.stringify(body))
