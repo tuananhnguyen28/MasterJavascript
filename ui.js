@@ -65,4 +65,15 @@ class Ui {
     // chèn main trước footer nằm trong body
     document.body.insertBefore(main, document.querySelector('footer'))
   }
+
+  // Alert the message when searching succeed or failure
+  alert(message, type='danger') {
+    const alertNode = document.createElement('div')
+    alertNode.className = `alert alert-${type}`
+    alertNode.textContent = message
+    document.getElementById('notification').appendChild(alertNode)
+    setTimeout(() => {  // after 2 seconds, alert automatically remove
+      alertNode.remove()
+    }, 2000)
+  }
 }

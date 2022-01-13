@@ -8,11 +8,13 @@ new Api().getInfo('tuananhnguyen28').then(res => {
 document.getElementById('form-search').addEventListener('submit', 
 async event => {
   event.preventDefault()
+  const ui = new Ui()
   const username = document.getElementById('username').value
   try {
     const {profile, repos} = await new Api().getInfo(username)
-    new Ui().render(profile, repos)
+    ui.render(profile, repos)
+    ui.alert(`Tìm thấy user: ${username}`, 'success')
   } catch (error) {
-    console.log(error)
+    ui.alert(error)
   }
 })
