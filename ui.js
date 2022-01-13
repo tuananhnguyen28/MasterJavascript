@@ -11,7 +11,7 @@ class Ui {
     const cards = repos.reduce((result, current) => {
       result += `
       <div class="card p-2 mb-3">
-        <a href="" class="mb-3 fs-4">
+        <a href="${current.html_url}" target="_blank" class="mb-3 fs-4">
           ${current.name}
         </a>
         <p class="mb-3">${current.description}</p>
