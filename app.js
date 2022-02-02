@@ -41,3 +41,25 @@ mapForEach.set(false, 'bool')
 mapForEach.forEach((value, key, map) => {
   console.log(value, key)
 })
+
+
+// 3. Tạo mới 1 Map từ Object và ngược lại
+
+// Object -> Map
+const user = {
+  'name': 'Tuan',
+  'gender': 'male'
+}
+console.log('Creating new Map from one Object:')
+console.log(Object.entries(user))
+
+// Map -> Object
+const originalMap = new Map(
+  [
+    ['blue', 'color'],
+    [67, 'kg'],
+    [175, 'cm']
+  ]
+)
+console.log('Creating new Object from one Map:')
+console.log(Object.fromEntries(originalMap))
