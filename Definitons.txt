@@ -1,0 +1,13 @@
+1. Design pattern là gì?
+-> Là khuôn mẫu thiết kế có sẵn để giải quyết một số vấn đề, giúp code thống nhất và hiệu quả hơn.
+
+2. Design pattern ứng dụng cho ngôn ngữ nào?
+-> Nó có ở mọi ngôn ngữ và mỗi ngôn ngữ lại có nhiều loại design pattern khác nhau.
+
+3. Ví dụ về một số Design pattern
+  - Angular sử dụng Dependency Injection, Observer,...
+  - React thì dùng High Order Component, cũng được biết đến như là Decorator Pattern.
+
+4. Module pattern
+-> Là một design pattern cực kỳ phổ biến trong Javascript, nó được dùng ở khắp mọi nơi. 
+Module giúp chúng ta tách riêng code thành một vùng độc lập, từ đó code sẽ clean và dễ tái sử dụng hơn.
