@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factory Pattern</title>
+</head>
+<body>
+  <script>
+
+    /*
+      - là pattern sử dụng phương thức factory để tạo object mà không chỉ định chính xác class hoặc constructor function
+      - được sử dụng để tạo các object mà không "làm lộ" logic khởi tạo
+      - pattern này có thể được sử dụng khi chúng ta cần tạo một object khác dựa vào một điều kiện được chỉ rõ từ trước
+    */
+
+    // Original
+    class Car {
+      constructor(options) {
+        this.doors = options.doors || 4
+        this.state = options.state || 'brand new'
+        this.color = options.color || 'white'
+      }
+    }
+
+    class Truck {
+      constructor(options) {
+        this.doors = options.doors || 4
+        this.state = options.state || 'used'
+        this.color = options.color || 'black'
+      }
+    }
+
+    class VehicleFactory {
+      createVehicle(options) {
+        if (options.vehicleType === 'car') { return new Car(options) }
+        else if (options.vehicleType === 'truck') { return new Truck(options) } 
+      }
+    }
+
+    /* How to resolve:
+      -> (1) tạo một class Car và Truck (với một số giá trị mặc định), 2 class này được sử dụng để tạo object car 
+      và truck. Và định nghĩa một class VehicleFactory để tạo và return 1 object mới dựa trên vehicleType
+      nhận được từ object options như một đối số.
+      -> (2) tạo một object mới là factory từ VehicleFactory class, sau đó chúng ta có thể tạo một object Car hoặc
+      Truck mới bằng cách gọi factory.createVehicle và truyền một object options với thuộc tính vehicleType
+      là car hoặc truck.
+    */
+    const factory = new VehicleFactory()
+    const car = factory.createVehicle({
+      vehicleType: 'car',
+      doors: 4,
+      color: 'silver',
+      state: 'brand new'
+    })
+    const truck = factory.createVehicle({
+      vehicleType: 'truck',
+      doors: 2,
+      color: 'white',
+      state: 'used'
+    })
+    // Print Car {doors: 4, state: 'brand new', color: 'silver'}
+    console.log(car)
+    // Print Truck {doors: 2, state: 'used', color: 'white'}
+    console.log(truck)
+
+  </script>
+</body>
+</html>
