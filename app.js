@@ -28,6 +28,10 @@ const UIController = (function() {
     </button>
     `
     document.querySelector('.list').appendChild(card)
+    renderTotal()
+    // Clear data input when creating item successfully
+    document.getElementById('name').value = ''
+    document.getElementById('amount').value = ''
   }
   function renderAll() {
     const list = LSController.getList()
@@ -35,6 +39,11 @@ const UIController = (function() {
     list.forEach(item => {
       add(item)
     })
+    renderTotal()
+  }
+  // While data rendering, calculate the total cost
+  function renderTotal() {
+    document.getElementById('total').innerHTML = `Tổng chi phí: ${LSController.getTotal()}`
   }
   return {
     add,
@@ -52,9 +61,15 @@ const LSController = (function() {
   function getList() {
     return JSON.parse(localStorage.getItem('list')) || []
   }
+  function getTotal() {
+    return getList().reduce((result, current) => {
+      return result + Number(current.amount)
+    }, 0)
+  }
   return {
     add,
-    getList
+    getList,
+    getTotal
   }
 })()
 
@@ -70,8 +85,9 @@ const App = (function() {
       const name = document.getElementById('name').value
       const amount = document.getElementById('amount').value
       const item = ItemController.createItem(name, amount)
-      UIController.add(item)
+      // The first, adding the data into Local Storage, then show data on UI
       LSController.add(item)
+      UIController.add(item)
     })
   }
   return {
