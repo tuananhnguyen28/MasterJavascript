@@ -23,15 +23,14 @@ const UIController = (function() {
       ${item.name}:
       <strong>${item.amount}</strong>
     </p>
-    <button class="btn btn-small btn-info" data-id="${item.id}">
+    <button class="btn btn-small btn-info btn-start-edit" data-id="${item.id}">
       Sửa
     </button>
     `
     document.querySelector('.list').appendChild(card)
     renderTotal()
     // Clear data input when creating item successfully
-    document.getElementById('name').value = ''
-    document.getElementById('amount').value = ''
+    resetForm()
   }
   function renderAll() {
     const list = LSController.getList()
@@ -45,9 +44,28 @@ const UIController = (function() {
   function renderTotal() {
     document.getElementById('total').innerHTML = `Tổng chi phí: ${LSController.getTotal()}`
   }
+  function startEdit(id) {
+    const item = LSController.getItem(id)
+    document.getElementById('btn-group').className = 'd-flex justify-content- between'
+    document.getElementById('btn-add').classList.add('d-none')
+    document.getElementById('btn-edit').dataset.id = item.id
+    document.getElementById('btn-remove').dataset.id = item.id
+    document.getElementById('name').value = item.name
+    document.getElementById('amount').value = item.amount
+  }
+  function resetForm() {
+    document.getElementById('name').value = ''
+    document.getElementById('amount').value = ''
+    document.getElementById('btn-edit').dataset.id = ''
+    document.getElementById('btn-remove').dataset.id = ''
+    document.getElementById('btn-group').className = 'd-none justify-content- between'
+    document.getElementById('btn-add').classList.remove('d-none')
+  }
   return {
     add,
-    renderAll
+    renderAll,
+    startEdit,
+    resetForm
   }
 })()
 
@@ -62,14 +80,31 @@ const LSController = (function() {
     return JSON.parse(localStorage.getItem('list')) || []
   }
   function getTotal() {
-    return getList().reduce((result, current) => {
+    const total = getList().reduce((result, current) => {
       return result + Number(current.amount)
     }, 0)
+    return total.toLocaleString()
+  }
+  function getItem(id) {
+    return getList().find(item => item.id === id)
+  }
+  function edit(id, {name, amount}) {
+    const list = getList()
+    for(let i = 0; i < list.length; i++) {
+      if(list[i].id === id) {
+        list[i].name = name
+        list[i].amount = amount
+        break
+      }
+    }
+    localStorage.setItem('list', JSON.stringify(list))
   }
   return {
     add,
     getList,
-    getTotal
+    getTotal,
+    getItem,
+    edit
   }
 })()
 
@@ -79,6 +114,7 @@ const App = (function() {
     // Render All
     UIController.renderAll()
 
+    // Add
     document.querySelector('form').addEventListener('submit', 
     event => {
       event.preventDefault()
@@ -89,6 +125,35 @@ const App = (function() {
       LSController.add(item)
       UIController.add(item)
     })
+
+    // Start Edit
+    document.querySelector('.list').addEventListener('click', 
+    event => {
+      if(event.target.classList.contains('btn-start-edit')) {
+        const id = event.target.dataset.id
+        UIController.startEdit(id)
+      }
+    })
+
+    // Edit
+    document.getElementById('btn-edit').addEventListener('click',
+    event => {
+      event.preventDefault()
+      const name = document.getElementById('name').value
+      const amount = document.getElementById('amount').value
+      const id = document.getElementById('btn-edit').dataset.id
+      LSController.edit(id, { name, amount })
+      UIController.renderAll()
+      UIController.resetForm()
+    })
+
+    // Back
+    document.getElementById('btn-back').addEventListener('click',
+    event => {
+      event.preventDefault()
+      UIController.resetForm()
+    })
+
   }
   return {
     init
@@ -96,3 +161,6 @@ const App = (function() {
 })()
 
 window.addEventListener('DOMContentLoaded', App.init)
+
+
+// 2. Edit
