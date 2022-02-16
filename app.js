@@ -99,12 +99,23 @@ const LSController = (function() {
     }
     localStorage.setItem('list', JSON.stringify(list))
   }
+  function remove(id) {
+    const list = getList()
+    const index = list.findIndex(item => item.id === id)
+    list.splice(index, 1)
+    localStorage.setItem('list', JSON.stringify(list))
+  }
+  function removeAll() {
+    localStorage.removeItem('list')
+  }
   return {
     add,
     getList,
     getTotal,
     getItem,
-    edit
+    edit,
+    remove,
+    removeAll
   }
 })()
 
@@ -152,6 +163,29 @@ const App = (function() {
     event => {
       event.preventDefault()
       UIController.resetForm()
+    })
+
+    // Remove
+    document.getElementById('btn-remove').addEventListener(
+    'click', (event) => {
+      event.preventDefault()
+      const id = document.getElementById('btn-remove').dataset.id
+      const item = LSController.getItem(id)
+      const isConfirmed = confirm(`Bạn có muốn xoá "${item.name}?"`)
+      if(isConfirmed) {
+        LSController.remove(id)
+        UIController.renderAll()
+        UIController.resetForm()
+      }
+    })
+
+    // Remove all
+    document.getElementById('btn-remove-all').addEventListener('click', () => {
+      const isConfirmed = confirm(`Bạn có muốn xoá tất cả?`)
+      if(isConfirmed) {
+        LSController.removeAll()
+        UIController.renderAll()
+      }
     })
 
   }
