@@ -1,0 +1,33 @@
+{
+  "name": "masterjavascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/tuananhnguyen28/MasterJavascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuananhnguyen28/MasterJavascript/issues"
+  },
+  "homepage": "https://github.com/tuananhnguyen28/MasterJavascript#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.4",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "file-loader": "^6.2.0",
+    "sass": "^1.49.7",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
