@@ -9,5 +9,8 @@ npm i @babel/core @babel/preset-env babel-loader @babel/plugin-transform-runtime
 How to install Style Loader and File Loader
 npm i css-loader file-loader sass sass-loader style-loader -D
 
-How to Webpack
+How to install Webpack
 npm i webpack webpack-cli webpack-dev-server -D
+
+How to install Bootstrap
+npm install bootstrap
