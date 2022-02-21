@@ -4,7 +4,39 @@
   <title>Project Webpack - Blog Management</title>
 </head>
 <body>
-  <h1>Test Bootstrap</h1>
+  <div class="container">
+    <h1 class="text-center text-info">
+      Blog Management
+    </h1>
+    <form class="mb-3">
+      <div class="mb-3">
+        <input type="text" class="form-control" id="title" placeholder="Title" />
+      </div>
+      <div class="mb-3">
+        <textarea id="description" class="form-control" placeholder="Description"></textarea>
+      </div>
+      <button class="btn btn-primary" id="btn-add">
+        Add
+      </button>
+      <div class="d-none justify-content-between">
+        <button class="btn btn-dark" id="btn-back">Back</button>
+        <button class="btn btn-info" id="btn-edit">Save</button>
+      </div>
+    </form>
+    <h2 class="mb-3 text-center">Posts</h2>
+    <div class="list">
+      <div class="card flex-row align-items-center justify-content-between p-2">
+        <div>
+          <p><strong>title</strong></p>
+          <p>description</p>
+        </div>
+        <div>
+          <button class="btn btn-info" id="btn-start-edit">Edit</button>
+          <button class="btn btn-danger" id="btn-remove">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <noscript>
     You need to enable Javascript to run this app.
   </noscript>
