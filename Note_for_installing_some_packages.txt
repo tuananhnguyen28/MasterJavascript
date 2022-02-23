@@ -14,3 +14,9 @@ npm i webpack webpack-cli webpack-dev-server -D
 
 How to install Bootstrap
 npm install bootstrap
+
+How to create a build without running the project on localhost
+npm run build (this cmd only run in the folder which contains package.json file, should be used with cd syntax)
+- After creating a build successfully, 'dist' folder will contain build file with name is 'bundle.js'
+- Addition, 'index.html' will run 'bundle.js' (javascript file) from 'dist' folder, opposite when running on localhost
+, 'index.html' will generate a js virtual and run on it.

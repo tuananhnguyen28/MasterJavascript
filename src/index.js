@@ -2,8 +2,9 @@ import http from './http'
 import 'bootstrap/scss/bootstrap.scss'
 
 // Get
-const renderAll = () => [
-  http.getPosts().then(res => {
+const renderAll = () => {
+  // Thêm 'return' để trả về 1 promise, để tiện xử lý sau này (để biết khi nào render thành công)
+  return http.getPosts().then(res => {
     const listNode = document.getElementById('list')
     listNode.innerHTML = ''
     const html = res.reduce((result, current) => {
@@ -23,14 +24,16 @@ const renderAll = () => [
     }, '')
     listNode.innerHTML = html
   })
-]
+}
 
 // Create
-const add = (title, description) => {
+const create = (title, description) => {
   http.createPost({title, description}).then(res => {
     document.getElementById('title').value = ''
     document.getElementById('description').value = ''
-    renderAll()
+    return renderAll()
+  }).then(() => {
+    alert('Create successfully!')
   })
 }
 
@@ -59,15 +62,30 @@ const update = (title, description) => {
   const id = document.getElementById('btn-edit').dataset.id
   http.updatePost(id, {title, description}).then(res => {
     clearForm()
-    renderAll()
+    return renderAll()
+  }).then(() => {
+    alert('Update successfully!')
   })
 }
 
 // Delete
 const _delete = id => {
   http.deletePost(id).then(res => {
-    renderAll()
+    return renderAll()
+  }).then(() => {
+    alert('Delete successfully!', 'danger')
   })
+}
+
+// Alert message once create/update/delete successfully
+const alert = (message, type = 'success') => {
+  const alertNode = document.createElement('div')
+  alertNode.className = `alert alert-${type}`
+  alertNode.textContent = message
+  document.getElementById('notification').appendChild(alertNode)
+  setTimeout(() => {
+    alertNode._delete()
+  }, 2000)
 }
 
 const init = () => {
@@ -80,7 +98,7 @@ const init = () => {
     event.preventDefault()
     const title = document.getElementById('title').value
     const description = document.getElementById('description').value
-    add(title, description)
+    create(title, description)
   })
 
   // Start Update
